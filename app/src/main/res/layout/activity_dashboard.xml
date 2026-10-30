@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/root" android:background="@color/background" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+    <com.google.android.material.appbar.MaterialToolbar android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="?attr/actionBarSize" app:title="@string/app_name" app:titleTextColor="@color/ink"/>
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="20dp" android:orientation="vertical">
+            <TextView android:id="@+id/tagline" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/tagline"/>
+            <TextView android:id="@+id/heading" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/ScreenTitle" android:text="@string/dashboard_title" android:layout_marginTop="8dp"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+                <com.google.android.material.button.MaterialButton android:id="@+id/previousMonth" android:layout_width="52dp" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/previous_short" android:contentDescription="@string/previous_month" style="@style/Widget.Material3.Button.TextButton"/>
+                <TextView android:id="@+id/month" android:layout_width="0dp" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/month_label" android:layout_weight="1" android:gravity="center"/>
+                <com.google.android.material.button.MaterialButton android:id="@+id/nextMonth" android:layout_width="52dp" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/next_short" android:contentDescription="@string/next_month" style="@style/Widget.Material3.Button.TextButton"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/hero_background" android:orientation="vertical">
+                <TextView android:id="@+id/balanceLabel" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/month_balance" android:textColor="@color/hero_text"/>
+                <TextView android:id="@+id/balance" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/ScreenTitle" android:text="@string/loading" android:textSize="36sp" android:textColor="@color/hero_text" android:layout_marginTop="8dp"/>
+                <TextView android:id="@+id/balanceNote" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/balance_note" android:textColor="@color/hero_text" android:layout_marginTop="8dp"/>
+            </LinearLayout>
+            <TextView android:id="@+id/income" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/income_total" android:layout_marginTop="20dp" android:textColor="@color/income"/>
+            <TextView android:id="@+id/expenses" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/expense_total" android:layout_marginTop="12dp" android:textColor="@color/expense"/>
+            <TextView android:id="@+id/vehicle" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/vehicle_total" android:layout_marginTop="12dp"/>
+            <TextView android:id="@+id/vehicleNote" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/vehicle_note"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/addIncome" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/add_income" android:layout_marginTop="16dp"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/addExpense" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/add_expense" style="@style/Widget.Material3.Button.OutlinedButton"/>
+            <TextView android:id="@+id/breakdownTitle" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/category_breakdown" android:layout_marginTop="24dp"/>
+            <LinearLayout android:id="@+id/categories" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"/>
+            <TextView android:id="@+id/recentTitle" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/recent_transactions" android:layout_marginTop="24dp"/>
+            <TextView android:id="@+id/empty" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/empty_message" android:layout_marginTop="12dp"/>
+            <LinearLayout android:id="@+id/recent" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/history" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/view_history" style="@style/Widget.Material3.Button.TextButton" android:layout_marginTop="12dp"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/language" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/language" style="@style/Widget.Material3.Button.TextButton"/>
+            <TextView android:id="@+id/privacy" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/privacy_note" android:layout_marginTop="12dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/transactionCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/card_background" android:orientation="vertical" android:minHeight="88dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground">
+    <TextView android:id="@+id/category" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/category"/>
+    <TextView android:id="@+id/amount" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/loading" android:layout_marginTop="4dp"/>
+    <TextView android:id="@+id/meta" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/date" android:layout_marginTop="6dp"/>
+    <TextView android:id="@+id/description" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/description" android:layout_marginTop="4dp" android:maxLines="2" android:ellipsize="end"/>
+</LinearLayout>

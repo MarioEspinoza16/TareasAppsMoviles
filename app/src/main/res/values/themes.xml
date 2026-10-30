@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<resources>
+    <style name="Base.Theme.MiBalance" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/hero_text</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:colorAccent">@color/primary</item>
+        <item name="android:fontFamily">sans</item>
+    </style>
+    <style name="Theme.MiBalance" parent="Base.Theme.MiBalance"/>
+    <style name="ScreenTitle">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+    <style name="SectionTitle">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+    <style name="Body">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/muted</item>
+    </style>
+    <style name="Field" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+</resources>
