@@ -50,5 +50,4 @@ class FinanceTest {
     @Test(expected = IllegalArgumentException::class) fun maintenanceNeedsDescription() {
         Transaction(type = TransactionType.EXPENSE, amountMinor = 100, date = LocalDate.now(), category = Category.MAINTENANCE)
     }
-    @Test(expected = IllegalArgumentException::class) fun locationRequiresBothCoordinates() { expense(100).copy(latitude = 10.0) }
 }

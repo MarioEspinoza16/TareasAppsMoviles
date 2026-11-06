@@ -1,23 +1,9 @@
-## Problema y resultado
+## MiBalance · Tarea 4
 
-MiBalance permite registrar ingresos y gastos personales y del vehículo para consultar un saldo mensual. Esta entrega agrega las cinco Activities y sus layouts XML y construye las bases pendientes de definición, mockups, modelos, interfaces, repositorio en memoria y ViewModels.
+Aplicación Android para registrar ingresos y gastos durante la sesión y consultar el saldo mensual. La revisión usa como referencia la rama semana7 de TaskManager.
 
-## Cambios
-
-- Resumen mensual, historial con filtros, creación/edición, detalle y ubicación.
-- Categorías para ingresos, gasolina, mantenimiento, reparaciones, comidas, salidas y otros gastos.
-- Mantenimiento y reparaciones con descripción obligatoria.
-- Cámara y galería para comprobantes; mapa OpenStreetMap con ubicación manual opcional.
-- Persistencia SQLite local además de MemoryDataRepository.
-- Recursos completos en inglés y español; código en inglés.
-- README, mockups, pruebas y guía de instalación y entrega.
-
-## Validación
-
-Consultar `docs/VALIDATION.md` para los resultados exactos de compilación, pruebas y lint de esta versión. La prueba física en el HONOR debe registrarse después de ejecutarla.
-
-## Límites y revisión
-
-El mapa necesita internet para descargar mosaicos. No hay sincronización, exportación ni recuperación de datos tras desinstalar. No hay integración con Uber ni rastreo GPS.
-
-Las bases de tareas 2 y 3 se completaron como parte de la preparación actual. Este PR no representa entregas anteriores. Solicito revisión de ebarahonautn antes del merge a main.
+- Activities Kotlin con layouts XML, `findViewById`, navegación con `Intent` y selector de fecha.
+- Modelos de transacción, interfaz de repositorio, lista en memoria y un ViewModel.
+- Historial con `RecyclerView`, adaptador y listener, filtros y edición de movimientos.
+- SQLite, View Binding, corrutinas, LiveData, cámara, galería y mapa quedan fuera de esta versión.
+- Los mockups iniciales se conservan como referencia del diseño y de las funciones propuestas.

@@ -3,60 +3,67 @@ package com.marioespinoza.mibalance.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.marioespinoza.mibalance.R
-import com.marioespinoza.mibalance.databinding.ActivityDetailBinding
-import com.marioespinoza.mibalance.domain.model.*
-import com.marioespinoza.mibalance.util.ReceiptFiles
+import com.marioespinoza.mibalance.domain.model.TransactionType
+import com.marioespinoza.mibalance.util.dateText
 import com.marioespinoza.mibalance.util.labelRes
-import com.marioespinoza.mibalance.viewmodel.DetailViewModel
+import com.marioespinoza.mibalance.util.money
+import com.marioespinoza.mibalance.util.setupScreen
+import com.marioespinoza.mibalance.util.toast
+import com.marioespinoza.mibalance.viewmodel.TransactionViewModel
 
-class DetailActivity : BaseActivity() {
-    private lateinit var binding: ActivityDetailBinding
-    private lateinit var model: DetailViewModel
-    private lateinit var id: String
-    private var item: Transaction? = null
+class DetailActivity : AppCompatActivity() {
+    private var confirmDelete = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        id = intent.getStringExtra("transaction_id") ?: run { finish(); return }
-        binding = ActivityDetailBinding.inflate(layoutInflater); setContentView(binding.root); setup(binding.root, binding.toolbar)
-        model = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))[DetailViewModel::class.java]
-        binding.edit.isEnabled = false; binding.delete.isEnabled = false
-        binding.edit.setOnClickListener { startActivity(Intent(this, TransactionEditActivity::class.java).putExtra("transaction_id", id)) }
-        binding.delete.setOnClickListener {
-            MaterialAlertDialogBuilder(this).setTitle(R.string.delete_title).setMessage(R.string.delete_message)
-                .setNegativeButton(R.string.cancel, null).setPositiveButton(R.string.delete) { _, _ ->
-                    binding.delete.isEnabled = false; binding.edit.isEnabled = false; model.delete(id)
-                }.show()
-        }
-        binding.viewLocation.setOnClickListener { item?.let { row ->
-            if (row.latitude != null) startActivity(Intent(this, LocationActivity::class.java).putExtra("latitude", row.latitude).putExtra("longitude", row.longitude!!).putExtra("read_only", true))
-        } }
-        model.state.observe(this) { result -> result.onSuccess { row ->
-            if (row == null) { toast(R.string.error_not_found); finish() }
-            else { item = row; render(row); binding.edit.isEnabled = !model.deleting; binding.delete.isEnabled = !model.deleting }
-        }.onFailure { toast(R.string.error_load) } }
-        model.deleted.observe(this) { result -> result.onSuccess {
-            ReceiptFiles.remove(this, item?.receiptPath); toast(R.string.deleted); finish()
-        }.onFailure { binding.delete.isEnabled = true; binding.edit.isEnabled = true; toast(R.string.error_delete) } }
+        setContentView(R.layout.activity_detail)
+        setupScreen()
     }
-    override fun onResume() { super.onResume(); model.load(id) }
-    private fun render(row: Transaction) {
-        binding.category.setText(row.category.labelRes)
-        binding.amount.text = money(row.amountMinor)
-        binding.amount.setTextColor(getColor(if (row.type == TransactionType.INCOME) R.color.income else R.color.expense))
-        binding.type.setText(if (row.type == TransactionType.INCOME) R.string.income else R.string.expense)
-        binding.date.text = dateText(row.date)
-        binding.description.text = row.description.ifBlank { getString(R.string.no_description) }
-        binding.odometer.visibility = if (row.odometerKm == null) View.GONE else View.VISIBLE
-        binding.odometer.text = getString(R.string.odometer_value, row.odometerKm?.toString().orEmpty())
-        binding.liters.visibility = if (row.fuelLiters == null) View.GONE else View.VISIBLE
-        binding.liters.text = getString(R.string.liters_value, row.fuelLiters.orEmpty())
-        val photo = row.receiptPath?.let(ReceiptFiles::preview)
-        binding.receipt.setImageBitmap(photo); binding.receipt.visibility = if (photo == null) View.GONE else View.VISIBLE
-        if (row.receiptPath != null && photo == null) toast(R.string.receipt_missing)
-        binding.location.text = if (row.latitude == null) getString(R.string.no_location) else getString(R.string.location_value, "%.5f".format(java.util.Locale.US, row.latitude), "%.5f".format(java.util.Locale.US, row.longitude))
-        binding.viewLocation.visibility = if (row.latitude == null) View.GONE else View.VISIBLE
+
+    override fun onResume() {
+        super.onResume()
+        val id = intent.getStringExtra("transaction_id")
+        val transaction = if (id == null) null else TransactionViewModel.getTransaction(id)
+        if (transaction == null) {
+            toast(R.string.error_not_found)
+            finish()
+            return
+        }
+
+        val income = transaction.type == TransactionType.INCOME
+        findViewById<TextView>(R.id.category).setText(transaction.category.labelRes)
+        findViewById<TextView>(R.id.amount).text = money(transaction.amountMinor)
+        findViewById<TextView>(R.id.amount).setTextColor(getColor(if (income) R.color.income else R.color.expense))
+        findViewById<TextView>(R.id.type).setText(if (income) R.string.income else R.string.expense)
+        findViewById<TextView>(R.id.date).text = dateText(transaction.date)
+        findViewById<TextView>(R.id.description).text = transaction.description.ifBlank { getString(R.string.no_description) }
+
+        val odometer = findViewById<TextView>(R.id.odometer)
+        odometer.visibility = if (transaction.odometerKm == null) View.GONE else View.VISIBLE
+        odometer.text = getString(R.string.odometer_value, transaction.odometerKm?.toString().orEmpty())
+        val liters = findViewById<TextView>(R.id.liters)
+        liters.visibility = if (transaction.fuelLiters == null) View.GONE else View.VISIBLE
+        liters.text = getString(R.string.liters_value, transaction.fuelLiters.orEmpty())
+
+        findViewById<Button>(R.id.edit).setOnClickListener {
+            startActivity(Intent(this, TransactionEditActivity::class.java).putExtra("transaction_id", transaction.id))
+        }
+        val delete = findViewById<Button>(R.id.delete)
+        confirmDelete = false
+        delete.setText(R.string.delete)
+        delete.setOnClickListener {
+            if (confirmDelete) {
+                TransactionViewModel.removeTransaction(transaction.id)
+                toast(R.string.deleted)
+                finish()
+            } else {
+                confirmDelete = true
+                delete.setText(R.string.confirm_delete)
+            }
+        }
     }
 }

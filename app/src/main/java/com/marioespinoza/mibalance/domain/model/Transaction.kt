@@ -19,20 +19,14 @@ data class Transaction(
     val category: Category,
     val description: String = "",
     val odometerKm: Long? = null,
-    val fuelLiters: String? = null,
-    val receiptPath: String? = null,
-    val latitude: Double? = null,
-    val longitude: Double? = null
+    val fuelLiters: String? = null
 ) {
     init {
         require(amountMinor in 1..999_999_999_999L)
         require(category.type == type)
         require(category !in setOf(Category.MAINTENANCE, Category.REPAIRS) || description.isNotBlank())
         require(odometerKm == null || odometerKm >= 0)
-        require(fuelLiters == null || (category == Category.FUEL && fuelLiters.toBigDecimal().signum() > 0))
-        require((latitude == null) == (longitude == null))
-        require(latitude == null || (latitude.isFinite() && latitude in -85.0..85.0))
-        require(longitude == null || (longitude.isFinite() && longitude in -180.0..180.0))
+        require(fuelLiters == null || (category == Category.FUEL && (fuelLiters.toDoubleOrNull() ?: 0.0) > 0.0))
     }
 }
 

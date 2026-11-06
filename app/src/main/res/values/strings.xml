@@ -7,11 +7,7 @@
     <string name="new_transaction">New transaction</string>
     <string name="edit_transaction">Edit transaction</string>
     <string name="detail_title">Transaction detail</string>
-    <string name="location_title">Expense location</string>
     <string name="back">Back</string>
-    <string name="language">Language / Idioma</string>
-    <string name="english">English</string>
-    <string name="spanish">Spanish</string>
     <string name="month_balance">Recorded balance</string>
     <string name="balance_note">Income minus expenses recorded this month.</string>
     <string name="income">Income</string>
@@ -43,33 +39,16 @@
     <string name="repair_detail">Repair performed (required)</string>
     <string name="odometer">Odometer (km, optional)</string>
     <string name="liters">Fuel liters (optional)</string>
-    <string name="receipt">Receipt (optional)</string>
-    <string name="choose_photo">Gallery</string>
-    <string name="take_photo">Camera</string>
-    <string name="remove_photo">Remove photo</string>
-    <string name="receipt_preview">Attached receipt</string>
-    <string name="receipt_missing">The attached image could not be opened.</string>
-    <string name="choose_location">Choose location</string>
-    <string name="remove_location">Remove location</string>
-    <string name="no_location">No location attached</string>
-    <string name="location_value">Coordinates: %1$s, %2$s</string>
     <string name="save">Save transaction</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
-    <string name="delete_title">Delete transaction?</string>
-    <string name="delete_message">This transaction and its receipt will be permanently removed.</string>
     <string name="saved">Transaction saved</string>
     <string name="deleted">Transaction deleted</string>
-    <string name="error_load">Could not load your records. Please try again.</string>
-    <string name="error_save">Could not save. Your form is still available.</string>
-    <string name="error_delete">Could not delete this transaction.</string>
     <string name="error_not_found">Transaction not found</string>
     <string name="error_amount">Enter an amount above zero, up to 9,999,999,999.99, with at most 2 decimals and no thousands separators.</string>
     <string name="error_description">Describe the maintenance or repair performed.</string>
     <string name="error_number">Enter a valid positive number.</string>
-    <string name="error_photo">Could not attach the photo. Try another image.</string>
-    <string name="error_camera">No camera app is available. You can use the gallery.</string>
     <string name="pick_date">Choose date</string>
     <string name="cat_driving">Driving work</string>
     <string name="cat_other_work">Other work</string>
@@ -84,21 +63,8 @@
     <string name="no_description">No description</string>
     <string name="odometer_value">Odometer: %1$s km</string>
     <string name="liters_value">Fuel: %1$s L</string>
-    <string name="map_instructions">Tap the map to place a pin. Internet is needed for map tiles; you can also enter coordinates.</string>
-    <string name="map_attribution">© OpenStreetMap contributors</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="apply_coordinates">Show coordinates on map</string>
-    <string name="use_location">Use this location</string>
-    <string name="error_coordinates">Enter latitude between -85 and 85 and longitude between -180 and 180.</string>
-    <string name="map_status">No GPS tracking. Choose the location manually.</string>
-    <string name="view_location">View location</string>
     <string name="loading">Loading…</string>
-    <string name="privacy_note">Your records stay on this device. No account required.</string>
-    <string name="discard_title">Discard changes?</string>
-    <string name="discard_message">Unsaved changes will be lost.</string>
-    <string name="discard">Discard</string>
-    <string name="view_transaction">View transaction: %1$s</string>
+    <string name="privacy_note">Transactions are kept only during this app session.</string>
     <string name="previous_short" translatable="false">‹</string>
     <string name="next_short" translatable="false">›</string>
     <string name="signed_income_amount">+ %1$s</string>
@@ -106,4 +72,7 @@
     <string name="labeled_amount">%1$s  %2$s</string>
     <string name="transaction_meta">%1$s · %2$s</string>
     <string name="date_button">Date · %1$s</string>
+    <string name="confirm_delete">Confirm deletion</string>
+    <string name="change_category">Category (tap to change)</string>
+    <string name="change_type">Transaction type (tap to change)</string>
 </resources>

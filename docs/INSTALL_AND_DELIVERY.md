@@ -8,7 +8,7 @@
 4. En la configuración de Gradle seleccioná JDK 17. No hace falta modificar tu instalación global de Java.
 5. Seleccioná el módulo `app` para ejecutar.
 
-Si trabajás desde un clon existente de TareasAppsMoviles, copiá el contenido del proyecto sobre ese clon sin borrar `.git`. Revisá `git status` antes de confirmar cambios. Si la conexión de GitHub permitió subir la rama desde esta conversación, preferí `git fetch origin` y cambiar a esa rama en vez de copiar archivos. Comprobá primero qué método se completó.
+Si trabajás desde un clon existente de TareasAppsMoviles, revisá primero `git status`. Con el árbol limpio, actualizá la rama de la tarea mediante `git switch task4-MiBalance-MarioEspinoza` y `git pull --ff-only`.
 
 ## B. Ejecutar en el HONOR
 
@@ -49,7 +49,6 @@ No subás `local.properties`, `.idea`, `.gradle`, carpetas `build`, claves de fi
 2. Creá una regla de protección o ruleset para `main`: exigir Pull Request y al menos una aprobación, sin permitir saltarse la revisión a quien entrega.
 3. El objetivo es bloquear los cambios directos a `main` y permitir el merge mediante PR aprobado. No actives una opción que bloquee también todos los merges.
 4. Verificá que el plan y la visibilidad del repositorio permitan aplicar la regla. No la des por activa solo porque se pudo guardar una configuración.
-5. Si se exigen comprobaciones automáticas, seleccioná el nombre real del trabajo de CI después de que haya ejecutado correctamente, no uno inventado.
 
 Estas acciones no quedan confirmadas por la existencia del código local. Deben comprobarse en GitHub.
 

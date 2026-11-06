@@ -3,64 +3,80 @@ package com.marioespinoza.mibalance.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.marioespinoza.mibalance.R
-import com.marioespinoza.mibalance.databinding.ActivityDashboardBinding
-import com.marioespinoza.mibalance.domain.model.*
+import com.marioespinoza.mibalance.domain.model.MonthlySummary
+import com.marioespinoza.mibalance.domain.model.Transaction
+import com.marioespinoza.mibalance.domain.model.TransactionFilter
+import com.marioespinoza.mibalance.domain.model.TransactionType
 import com.marioespinoza.mibalance.util.labelRes
-import com.marioespinoza.mibalance.viewmodel.DashboardViewModel
+import com.marioespinoza.mibalance.util.money
+import com.marioespinoza.mibalance.util.monthText
+import com.marioespinoza.mibalance.util.openDetail
+import com.marioespinoza.mibalance.util.setupScreen
+import com.marioespinoza.mibalance.viewmodel.TransactionViewModel
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
-class DashboardActivity : BaseActivity() {
-    private lateinit var binding: ActivityDashboardBinding
-    private lateinit var model: DashboardViewModel
+class DashboardActivity : AppCompatActivity(), OnTransactionClickListener {
     private var month = YearMonth.now()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        month = savedInstanceState?.getString("month")?.let(YearMonth::parse) ?: month
-        binding = ActivityDashboardBinding.inflate(layoutInflater)
-        setContentView(binding.root); setup(binding.root, binding.toolbar, false)
-        model = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))[DashboardViewModel::class.java]
-        binding.previousMonth.setOnClickListener { month = month.minusMonths(1); load() }
-        binding.nextMonth.setOnClickListener { month = month.plusMonths(1); load() }
-        binding.addIncome.setOnClickListener { create(TransactionType.INCOME) }
-        binding.addExpense.setOnClickListener { create(TransactionType.EXPENSE) }
-        binding.history.setOnClickListener { startActivity(Intent(this, HistoryActivity::class.java).putExtra("month", month.toString())) }
-        binding.language.setOnClickListener {
-            MaterialAlertDialogBuilder(this).setTitle(R.string.language)
-                .setItems(arrayOf(getString(R.string.english), getString(R.string.spanish))) { _, index ->
-                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(if (index == 0) "en" else "es"))
-                }.show()
+        setContentView(R.layout.activity_dashboard)
+        setupScreen(back = false)
+        val savedMonth = savedInstanceState?.getString("month")
+        if (savedMonth != null) month = YearMonth.parse(savedMonth)
+        findViewById<RecyclerView>(R.id.recent).layoutManager = LinearLayoutManager(this)
+        findViewById<Button>(R.id.previousMonth).setOnClickListener {
+            month = month.minusMonths(1)
+            load()
         }
-        model.state.observe(this) { result ->
-            result.onSuccess { rows ->
-                val summary = MonthlySummary.from(rows)
-                binding.balance.text = money(summary.balanceMinor)
-                binding.income.text = getString(R.string.labeled_amount, getString(R.string.income_total), money(summary.incomeMinor))
-                binding.expenses.text = getString(R.string.labeled_amount, getString(R.string.expense_total), money(summary.expenseMinor))
-                binding.vehicle.text = getString(R.string.labeled_amount, getString(R.string.vehicle_total), money(summary.vehicleMinor))
-                binding.empty.visibility = if (rows.isEmpty()) View.VISIBLE else View.GONE
-                binding.categories.removeAllViews()
-                summary.expensesByCategory.entries.sortedByDescending { it.value }.forEach { (category, value) ->
-                    binding.categories.addView(TextView(this).apply {
-                        text = getString(R.string.transaction_meta, getString(category.labelRes), money(value))
-                        textSize = 16f; setTextColor(getColor(R.color.ink)); setPadding(0, 20, 0, 16)
-                    })
-                }
-                addRows(binding.recent, rows.take(4))
-            }.onFailure { toast(R.string.error_load); binding.balance.setText(R.string.error_load) }
+        findViewById<Button>(R.id.nextMonth).setOnClickListener {
+            month = month.plusMonths(1)
+            load()
+        }
+        findViewById<Button>(R.id.addIncome).setOnClickListener { openForm(TransactionType.INCOME) }
+        findViewById<Button>(R.id.addExpense).setOnClickListener { openForm(TransactionType.EXPENSE) }
+        findViewById<Button>(R.id.history).setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java).putExtra("month", month.toString()))
         }
     }
-    override fun onResume() { super.onResume(); load() }
+
+    override fun onResume() {
+        super.onResume()
+        load()
+    }
+
     private fun load() {
-        binding.month.text = month.format(DateTimeFormatter.ofPattern("MMMM yyyy", resources.configuration.locales[0]))
-        model.load(TransactionFilter(month))
+        val rows = TransactionViewModel.getTransactions(TransactionFilter(month))
+        val summary = MonthlySummary.from(rows)
+        findViewById<TextView>(R.id.month).text = monthText(month)
+        findViewById<TextView>(R.id.balance).text = money(summary.balanceMinor)
+        findViewById<TextView>(R.id.income).text =
+            getString(R.string.labeled_amount, getString(R.string.income_total), money(summary.incomeMinor))
+        findViewById<TextView>(R.id.expenses).text =
+            getString(R.string.labeled_amount, getString(R.string.expense_total), money(summary.expenseMinor))
+        findViewById<TextView>(R.id.vehicle).text =
+            getString(R.string.labeled_amount, getString(R.string.vehicle_total), money(summary.vehicleMinor))
+        findViewById<TextView>(R.id.empty).visibility = if (rows.isEmpty()) View.VISIBLE else View.GONE
+        findViewById<TextView>(R.id.categories).text = summary.expensesByCategory.entries.joinToString("\n") {
+            getString(R.string.transaction_meta, getString(it.key.labelRes), money(it.value))
+        }
+        findViewById<RecyclerView>(R.id.recent).adapter = TransactionListAdapter(rows.take(4), this)
     }
-    private fun create(type: TransactionType) { startActivity(Intent(this, TransactionEditActivity::class.java).putExtra("type", type.name)) }
-    override fun onSaveInstanceState(outState: Bundle) { outState.putString("month", month.toString()); super.onSaveInstanceState(outState) }
+
+    private fun openForm(type: TransactionType) {
+        startActivity(Intent(this, TransactionEditActivity::class.java).putExtra("type", type.name))
+    }
+
+    override fun onTransactionClick(transaction: Transaction) = openDetail(transaction)
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("month", month.toString())
+        super.onSaveInstanceState(outState)
+    }
 }
