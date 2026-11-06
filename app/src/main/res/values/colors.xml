@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<resources>
+    <color name="primary">#12635B</color>
+    <color name="primary_dark">#0A3E3A</color>
+    <color name="background">#F4F7F6</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="ink">#172D30</color>
+    <color name="muted">#536A6D</color>
+    <color name="income">#12635B</color>
+    <color name="expense">#B44434</color>
+    <color name="line">#DCE7E3</color>
+    <color name="hero_text">#FFFFFF</color>
+</resources>

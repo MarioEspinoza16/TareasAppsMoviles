@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<resources>
+    <style name="Theme.MiBalance" parent="Base.Theme.MiBalance">
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>
