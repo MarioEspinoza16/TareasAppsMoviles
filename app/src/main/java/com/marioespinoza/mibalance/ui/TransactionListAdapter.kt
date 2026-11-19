@@ -1,14 +1,9 @@
 package com.marioespinoza.mibalance.ui
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Button
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.marioespinoza.mibalance.R
@@ -33,7 +28,6 @@ class TransactionListAdapter(
         val meta: TextView = view.findViewById(R.id.meta)
         val description: TextView = view.findViewById(R.id.description)
         val transactionId: TextView = view.findViewById(R.id.transactionId)
-        val copyId: Button = view.findViewById(R.id.copyId)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionHolder {
@@ -60,11 +54,6 @@ class TransactionListAdapter(
         holder.meta.text = context.getString(R.string.transaction_meta, type, date)
         holder.description.text = transaction.description.ifBlank { context.getString(transaction.category.labelRes) }
         holder.transactionId.text = context.getString(R.string.transaction_id_value, transaction.id)
-        holder.copyId.setOnClickListener {
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.copy_id), transaction.id))
-            Toast.makeText(context, R.string.id_copied, Toast.LENGTH_SHORT).show()
-        }
         holder.itemView.setOnClickListener { listener.onTransactionClick(transaction) }
     }
 }

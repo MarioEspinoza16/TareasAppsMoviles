@@ -13,7 +13,7 @@ Organicé el manejo de los ingresos y gastos alrededor de la pantalla **Movimien
 - Agregué un botón **Movimientos** en el inicio y en el formulario.
 - La lista muestra todos los movimientos registrados, de todas las fechas, ordenados por ID.
 - Cambié los identificadores largos por números consecutivos: **1, 2, 3…**. Los ingresos y los gastos comparten la misma secuencia.
-- Cada fila muestra **ID y nombre**, categoría, monto, tipo y fecha. También tiene la opción **Copiar ID**.
+- Cada fila muestra **ID y nombre**, categoría, monto, tipo y fecha.
 - Coloqué **Buscar ID** arriba de la lista. La búsqueda es exacta: buscar `1` muestra el movimiento 1, no el 10 ni el 11. **Ver todos** restaura la lista completa.
 - Al seleccionar una fila puedo abrir su detalle y entrar a editar o eliminar.
 - Al guardar un movimiento nuevo o una actualización, regreso a Movimientos.
@@ -35,7 +35,7 @@ El botón **Nuevo movimiento** permite registrar otro ingreso o gasto. La búsqu
 
 ## Pantallas actuales de la Tarea 5
 
-Las siguientes imágenes fueron **renderizadas desde los layouts y el código actuales con Robolectric, Android API 28**, usando datos ficticios. Los formularios y la lista permiten desplazarse. Por separado, probé el flujo actualizado en mi teléfono HONOR y confirmé que funciona como esperaba.
+Las siguientes imágenes fueron **renderizadas externamente desde los layouts y el código actuales en un entorno Android API 28**, usando datos ficticios. El generador de imágenes no forma parte del código ni de las dependencias entregadas. Los formularios y la lista permiten desplazarse. Por separado, probé el flujo actualizado en mi teléfono HONOR y confirmé que funciona como esperaba.
 
 | Resumen mensual | Movimientos: lista con ID y nombre |
 | --- | --- |
@@ -99,6 +99,20 @@ El kilometraje es opcional para gastos del vehículo y los litros son opcionales
 
 Utilicé Kotlin, layouts XML, `findViewById`, `Intent`, `RecyclerView`, `DatePickerDialog` y `AlertDialog`, siguiendo el patrón del proyecto de clase. La aplicación conserva el repositorio en memoria. Los montos se calculan en centésimos con números enteros para conservar los decimales; el formulario admite coma o punto sin separadores de miles.
 
+### Relación con lo visto en clase hasta semana 9
+
+| Herramienta o patrón | Aplicación en MiBalance |
+| --- | --- |
+| Kotlin, modelos y enumeraciones | Movimientos, tipos, categorías y validaciones |
+| Activities y layouts XML con `findViewById` | Inicio, Movimientos, detalle y formulario |
+| `Intent` | Navegación y envío del ID seleccionado |
+| `RecyclerView`, adaptador y listener | Lista y selección de movimientos |
+| Interfaz de repositorio, memoria y ViewModel | Patrón trabajado antes de la integración de Room |
+| `DatePickerDialog` y `AlertDialog` | Fecha y confirmaciones de actualización/eliminación |
+| JUnit | Pruebas de montos, totales, búsqueda y operaciones del repositorio |
+
+Tomé como referencia los ejemplos de [semana 7](https://github.com/utn-app-movil/task-mngr-g1/tree/semana7) y [semana 9](https://github.com/utn-app-movil/task-mngr-g1/tree/semana9). La numeración consecutiva y los cálculos son la lógica propia de mi proyecto, implementada con Kotlin. La entrega conserva estas herramientas sin agregar una biblioteca de pruebas de interfaz ni funciones de portapapeles.
+
 ### Almacenamiento de esta entrega
 
 Los movimientos se comparten entre las pantallas mientras el proceso de la aplicación está activo. **Al finalizar el proceso, se borran los registros y la numeración vuelve a empezar en 1.** Esta versión todavía no utiliza Room ni almacenamiento permanente.
@@ -132,10 +146,10 @@ Para actualizar un clon existente, primero reviso `git status` y luego ejecuto `
 
 ## Pruebas realizadas
 
-- **19 pruebas automatizadas aprobadas:** 11 de JUnit y 8 de Robolectric.
+- **11 pruebas de lógica con JUnit aprobadas**, la herramienta incluida también en el proyecto del profesor.
 - Verifiqué IDs consecutivos, conservación de IDs al editar y eliminación sin reutilizarlos.
 - Probé una lista con 50 movimientos de distintas fechas y la búsqueda exacta por ID.
-- Comprobé confirmación/cancelación, navegación, copia de ID y recreación del formulario.
+- Probé el flujo de consulta, actualización, confirmación/cancelación y eliminación en mi HONOR.
 - **Android Lint:** sin errores; conserva advertencias no bloqueantes.
 - **Compilación del APK:** correcta.
 - **Prueba en mi HONOR:** confirmé que el flujo actualizado funciona como quería.

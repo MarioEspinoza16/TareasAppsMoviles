@@ -11,7 +11,7 @@ Usar datos ficticios. Comprobar el flujo en el HONOR; los mockups son diseños h
 7. Editar el monto a ₡10 000. Cancelar la confirmación: debe conservar ₡12 500,50. Repetir y confirmar: vuelve a Movimientos y conserva ID 2 sin duplicarlo. Volver al resumen: saldo del mes ₡15 000 si el movimiento del año pasado no pertenece al mes actual.
 8. Seleccionar ID 2 y tocar Eliminar. Cancelar: debe permanecer. Confirmar: desaparece. Al regresar, la lista debe mostrar los movimientos restantes aunque se hubiera buscado ese ID.
 9. Crear otro movimiento: debe recibir ID 4. No se debe reutilizar 2 ni cambiar el ID 3. Probar eliminar desde el formulario de edición y desde detalle.
-10. Confirmar que los movimientos recientes del resumen también muestran ID y nombre. Copiar ID debe copiar solo el número y no abrir el detalle; tocar la fila sí lo abre.
+10. Confirmar que los movimientos recientes del resumen también muestran ID y nombre. Tocar una fila debe abrir el detalle de ese ID.
 11. Probar nombre vacío, monto cero o inválido, mantenimiento/reparación sin descripción y litros inválidos: no se deben guardar datos inválidos.
 12. Probar Nuevo movimiento desde edición, girar el teléfono antes de guardar y comprobar que no sobrescribe el movimiento anterior.
 13. Registrar o editar desde la lista después de una búsqueda: al guardar debe volver a mostrar todos los movimientos.

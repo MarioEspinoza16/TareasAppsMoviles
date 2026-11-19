@@ -10,3 +10,5 @@ Users can open Transactions from the dashboard or the editor. This screen lists 
 - Task 4 is included as the baseline because it has not been merged into main.
 
 See `docs/VALIDATION.md` for automated results and `docs/MANUAL_TESTS.md` for the physical device checklist. Branch/title: `task5-MarioEspinoza-MiBalance`; base: `main`. Professor reviewer: `ebarahonautn`. Merge only after professor approval; submit the PR URL in campus.
+
+Classroom scope: the delivered app uses Kotlin/XML, Activities, Intent, RecyclerView with a listener, the memory repository/ViewModel pattern, DatePickerDialog, AlertDialog and JUnit. Rendered documentation images are generated externally.
