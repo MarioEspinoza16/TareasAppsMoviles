@@ -80,6 +80,8 @@
     <string name="error_search">Ingresá una descripción o el ID del movimiento.</string>
     <string name="select_transaction">Seleccioná un movimiento para editar</string>
     <string name="transaction_id_value">ID: %1$s</string>
+    <string name="copy_id">Copiar ID</string>
+    <string name="id_copied">ID del movimiento copiado</string>
     <string name="new_transaction_hint">Nuevo movimiento: el ID se genera al guardar.</string>
     <string name="search_result">%1$s · %2$s\n%3$s · %4$s\nID: %5$s</string>
     <string name="change_category">Categoría (tocá para cambiar)</string>

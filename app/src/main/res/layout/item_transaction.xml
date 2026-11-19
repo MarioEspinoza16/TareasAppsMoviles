@@ -4,4 +4,8 @@
     <TextView android:id="@+id/amount" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/loading" android:layout_marginTop="4dp"/>
     <TextView android:id="@+id/meta" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/date" android:layout_marginTop="6dp"/>
     <TextView android:id="@+id/description" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/description" android:layout_marginTop="4dp" android:maxLines="2" android:ellipsize="end"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="6dp">
+        <TextView android:id="@+id/transactionId" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" style="@style/Body" android:textSize="13sp"/>
+        <com.google.android.material.button.MaterialButton android:id="@+id/copyId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="48dp" android:text="@string/copy_id" style="@style/Widget.Material3.Button.TextButton"/>
+    </LinearLayout>
 </LinearLayout>

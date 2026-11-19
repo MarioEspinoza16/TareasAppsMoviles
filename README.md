@@ -18,6 +18,7 @@ Como conductor y estudiante necesito saber cuánto dinero recibo, en qué lo gas
 - Registrar kilometraje opcional en gastos del vehículo y litros opcionales al cargar gasolina.
 - Filtrar el historial por mes, año, tipo y categoría.
 - Consultar ingresos, gastos, saldo y distribución de gastos por categoría.
+- Mostrar el ID completo junto a cada movimiento del historial y los movimientos recientes, con botón Copiar ID.
 - Buscar movimientos por descripción o ID desde el formulario y seleccionar uno para editar.
 - Confirmar la actualización y la eliminación mediante diálogos con opciones de confirmar o cancelar.
 - Crear, consultar, actualizar y eliminar desde `TransactionEditActivity`.

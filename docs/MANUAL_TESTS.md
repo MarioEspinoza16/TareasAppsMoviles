@@ -4,7 +4,7 @@ Usar datos ficticios. Las pruebas del teléfono se deben realizar en el HONOR o 
 
 1. Crear un ingreso de ₡25 000 en el mes actual. Después de guardar, el formulario debe mostrar su ID, el botón Actualizar y la opción Eliminar.
 2. Tocar Nuevo movimiento. Crear un gasto de gasolina de ₡12 500,50 con descripción `Gasolina Barranca`. Volver al resumen: el saldo debe ser ₡12 499,50.
-3. Desde el formulario, buscar `barranca`. Seleccionar el resultado. Debe cargar monto, tipo, categoría, fecha, descripción, kilometraje y litros del movimiento correcto. Buscar también por su ID, que se puede seleccionar y copiar en el formulario.
+3. Abrir el historial y revisar que cada movimiento muestre su ID completo y el botón Copiar ID. Copiar el ID de Gasolina Barranca, pegarlo en la búsqueda del formulario y comprobar que aparezca ese movimiento. Revisar también los IDs de los movimientos recientes del resumen. Desde el formulario, buscar `barranca`. Seleccionar el resultado. Debe cargar monto, tipo, categoría, fecha, descripción, kilometraje y litros del movimiento correcto. Buscar también por su ID, que se puede seleccionar y copiar en el formulario.
 4. Cambiar el monto a ₡10 000 y tocar Actualizar. Cancelar el diálogo: al consultar de nuevo debe seguir en ₡12 500,50. Repetir y confirmar: debe quedar en ₡10 000, con el mismo ID y sin duplicados; saldo mensual ₡15 000.
 5. Tocar Eliminar y cancelar: el movimiento debe continuar. Repetir y confirmar: el formulario pasa a Nuevo, el ID anterior desaparece y el historial/resumen reflejan la eliminación al volver.
 6. Abrir otro movimiento desde el historial. En detalle, Eliminar debe mostrar un diálogo: cancelar conserva el registro; confirmar lo elimina.

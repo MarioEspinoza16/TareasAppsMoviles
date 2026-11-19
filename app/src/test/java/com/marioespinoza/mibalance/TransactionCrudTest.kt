@@ -1,6 +1,8 @@
 package com.marioespinoza.mibalance
 
 import android.content.Intent
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Looper
 import android.widget.Button
 import android.widget.EditText
@@ -12,6 +14,10 @@ import com.marioespinoza.mibalance.domain.model.TransactionFilter
 import com.marioespinoza.mibalance.domain.model.TransactionType
 import com.marioespinoza.mibalance.ui.DetailActivity
 import com.marioespinoza.mibalance.ui.TransactionEditActivity
+import com.marioespinoza.mibalance.ui.OnTransactionClickListener
+import com.marioespinoza.mibalance.ui.TransactionListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.marioespinoza.mibalance.viewmodel.TransactionViewModel
 import org.junit.Assert.*
 import org.junit.Before
@@ -136,5 +142,31 @@ class TransactionCrudTest {
         controller.get().findViewById<Button>(R.id.save).performClick()
         assertEquals(original, TransactionViewModel.getTransaction(original.id))
         assertEquals(2, TransactionViewModel.getTransactions(filter).size)
+    }
+
+    @Test fun listRowsShowAndCopyTheirOwnIdAfterRebindingWithoutOpeningTheDetail() {
+        val original = seed()
+        val second = original.copy(id = "another-transaction-id", description = "Second fuel purchase")
+        val activity = editor()
+        var openedId: String? = null
+        val adapter = TransactionListAdapter(listOf(original, second), object : OnTransactionClickListener {
+            override fun onTransactionClick(transaction: Transaction) { openedId = transaction.id }
+        })
+        val recycler = RecyclerView(activity)
+        recycler.layoutManager = LinearLayoutManager(activity)
+        val holder = adapter.onCreateViewHolder(recycler, 0)
+        val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        adapter.onBindViewHolder(holder, 0)
+        assertEquals(activity.getString(R.string.transaction_id_value, original.id), holder.transactionId.text)
+        holder.copyId.performClick()
+        assertEquals(original.id, clipboard.primaryClip?.getItemAt(0)?.text.toString())
+        assertNull(openedId)
+        adapter.onBindViewHolder(holder, 1)
+        assertEquals(activity.getString(R.string.transaction_id_value, second.id), holder.transactionId.text)
+        holder.copyId.performClick()
+        assertEquals(second.id, clipboard.primaryClip?.getItemAt(0)?.text.toString())
+        assertNull(openedId)
+        holder.itemView.performClick()
+        assertEquals(second.id, openedId)
     }
 }

@@ -82,6 +82,8 @@
     <string name="error_search">Enter a description or transaction ID.</string>
     <string name="select_transaction">Select a transaction to edit</string>
     <string name="transaction_id_value">ID: %1$s</string>
+    <string name="copy_id">Copy ID</string>
+    <string name="id_copied">Transaction ID copied</string>
     <string name="new_transaction_hint">New transaction: the ID is generated when saving.</string>
     <string name="search_result">%1$s · %2$s\n%3$s · %4$s\nID: %5$s</string>
     <string name="change_category">Category (tap to change)</string>
