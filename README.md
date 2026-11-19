@@ -1,32 +1,74 @@
-# MiBalance
+# MiBalance — Tarea 5
 
-**Tu dinero, en perspectiva.** Aplicación Android individual para registrar ingresos, gastos personales y gastos del vehículo, y consultar el saldo de cada mes.
+**Tu dinero, en perspectiva.** Mi aplicación Android para registrar ingresos, gastos personales y gastos del vehículo, y consultar el saldo de cada mes.
 
-**Autor:** Mario Espinoza · **Curso:** ITI-623 · UTN Sede del Pacífico
-**Modalidad:** individual · **Repositorio:** TareasAppsMoviles
-**Entrega actual:** Tarea 5 — CRUD, búsqueda y diálogos de confirmación.
+**Autor:** Mario Espinoza · **Curso:** ITI-623 · **Universidad:** UTN, Sede del Pacífico
 
-## Problema que quiero resolver
+**Rama:** `task5-MarioEspinoza-MiBalance` · **Entrega:** Tarea 5 — CRUD, búsqueda y confirmaciones
 
-Como conductor y estudiante necesito saber cuánto dinero recibo, en qué lo gasto y cuánto me queda cada mes. Quiero registrar gasolina, reparaciones y el mantenimiento específico del vehículo, además de comidas, salidas y otros gastos personales. MiBalance es independiente de Uber: no se conecta con cuentas, viajes ni APIs de esa plataforma.
+## Qué hice en esta tarea
 
-## Alcance y funcionalidades
+Organicé el manejo de los ingresos y gastos alrededor de la pantalla **Movimientos**. Ahora puedo ver los registros antes de buscarlos, identificar cada uno por su número y nombre, y seleccionar el que quiero consultar, editar o eliminar.
 
-- Crear, consultar, editar y eliminar ingresos y gastos.
-- Seleccionar fecha, monto en CRC, tipo, categoría y nombre/descripción obligatoria.
-- Describir obligatoriamente el mantenimiento o la reparación realizada.
-- Registrar kilometraje opcional en gastos del vehículo y litros opcionales al cargar gasolina.
-- Cambiar el mes del resumen; la pantalla Movimientos siempre permite consultar todas las fechas.
-- Consultar ingresos, gastos, saldo y distribución de gastos por categoría.
-- Mostrar IDs consecutivos (1, 2, 3…) junto al nombre de cada movimiento, con botón Copiar ID.
-- Abrir Movimientos desde el inicio o el formulario; ver todos los registros de todas las fechas y buscar un ID exacto.
-- Al guardar, regresar a Movimientos. Seleccionar una fila para consultar, editar o eliminar el movimiento.
-- Confirmar la actualización y la eliminación mediante diálogos con opciones de confirmar o cancelar.
-- Crear, consultar, actualizar y eliminar desde `TransactionEditActivity`.
-- Mostrar los textos en español o inglés según el idioma del dispositivo.
-- Mantener los movimientos en memoria durante la sesión de la aplicación.
+- Agregué un botón **Movimientos** en el inicio y en el formulario.
+- La lista muestra todos los movimientos registrados, de todas las fechas, ordenados por ID.
+- Cambié los identificadores largos por números consecutivos: **1, 2, 3…**. Los ingresos y los gastos comparten la misma secuencia.
+- Cada fila muestra **ID y nombre**, categoría, monto, tipo y fecha. También tiene la opción **Copiar ID**.
+- Coloqué **Buscar ID** arriba de la lista. La búsqueda es exacta: buscar `1` muestra el movimiento 1, no el 10 ni el 11. **Ver todos** restaura la lista completa.
+- Al seleccionar una fila puedo abrir su detalle y entrar a editar o eliminar.
+- Al guardar un movimiento nuevo o una actualización, regreso a Movimientos.
+- Agregué diálogos para confirmar o cancelar la actualización y la eliminación.
+- El nombre o descripción es obligatorio. Conservé las validaciones de montos, kilometraje, litros y detalles de mantenimiento/reparación.
+- Mantuve el código en inglés y los textos de la interfaz en español e inglés.
 
-**Saldo registrado = ingresos del mes − gastos del mes.** Los gastos del vehículo ya están incluidos en el total de gastos. El saldo representa los movimientos ingresados, no un saldo bancario conectado.
+**Editar conserva el ID. Eliminar no cambia los IDs de los demás movimientos ni reutiliza el número eliminado.**
+
+## Cómo se usa
+
+1. En el inicio selecciono **Agregar ingreso** o **Agregar gasto**.
+2. Completo el nombre, monto, fecha, categoría y los datos que correspondan. Presiono **Guardar movimiento**.
+3. Se abre **Movimientos**, donde veo el registro con su ID numérico y nombre.
+4. Selecciono una fila o escribo su ID en la búsqueda. Desde el detalle puedo **Editar** o **Eliminar**.
+5. Si actualizo o elimino, confirmo la acción en el diálogo. Cancelar deja los datos guardados como estaban.
+
+El botón **Nuevo movimiento** permite registrar otro ingreso o gasto. La búsqueda se limpia al volver después de guardar o de eliminar un movimiento buscado, para poder ver los registros restantes.
+
+## Pantallas actuales de la Tarea 5
+
+Las siguientes imágenes fueron **renderizadas desde los layouts y el código actuales con Robolectric, Android API 28**, usando datos ficticios. Los formularios y la lista permiten desplazarse. Por separado, probé el flujo actualizado en mi teléfono HONOR y confirmé que funciona como esperaba.
+
+| Resumen mensual | Movimientos: lista con ID y nombre |
+| --- | --- |
+| <img src="docs/screenshots/task5/01-resumen.png" width="280" alt="Resumen mensual con el botón Movimientos" /> | <img src="docs/screenshots/task5/02-movimientos.png" width="280" alt="Lista de movimientos con IDs consecutivos y nombres" /> |
+
+| Búsqueda exacta por ID | Registrar un movimiento |
+| --- | --- |
+| <img src="docs/screenshots/task5/03-busqueda-id.png" width="280" alt="Resultado de buscar el movimiento con ID 2" /> | <img src="docs/screenshots/task5/04-nuevo-movimiento.png" width="280" alt="Formulario para crear un ingreso o gasto" /> |
+
+| Detalle del movimiento | Formulario de edición y acciones |
+| --- | --- |
+| <img src="docs/screenshots/task5/05-detalle.png" width="280" alt="Detalle con ID, nombre y opciones para editar o eliminar" /> | <img src="docs/screenshots/task5/06-editar-movimiento.png" width="280" alt="Formulario desplazado para mostrar las acciones de edición" /> |
+
+| Confirmar actualización | Confirmar eliminación |
+| --- | --- |
+| <img src="docs/screenshots/task5/07-confirmar-actualizacion.png" width="340" alt="Diálogo para confirmar o cancelar una actualización" /> | <img src="docs/screenshots/task5/08-confirmar-eliminacion.png" width="340" alt="Diálogo para confirmar o cancelar una eliminación" /> |
+
+### Diseños iniciales
+
+Los diseños de las tareas anteriores se conservan como referencia. Incluyen propuestas como comprobantes y mapa que todavía no forman parte de la aplicación.
+
+<details>
+<summary>Ver los mockups iniciales</summary>
+
+![Diseños iniciales de MiBalance](docs/mockups/overview.png)
+
+</details>
+
+## Resumen mensual y categorías
+
+Como conductor y estudiante necesito saber cuánto recibo, en qué lo gasto y cuánto me queda. Puedo cambiar el mes del resumen para consultar ingresos, gastos, gastos del vehículo y distribución por categoría. La pantalla Movimientos permite consultar todas las fechas.
+
+**Saldo registrado = ingresos del mes − gastos del mes.** Los gastos del vehículo ya están incluidos en el total de gastos. MiBalance utiliza los datos que registro; no se conecta con cuentas bancarias ni con Uber.
 
 | Ingresos | Gastos |
 | --- | --- |
@@ -38,96 +80,74 @@ Como conductor y estudiante necesito saber cuánto dinero recibo, en qué lo gas
 | | Servicios y gastos personales |
 | | Otros gastos |
 
-## Mockups y pantallas
+El kilometraje es opcional para gastos del vehículo y los litros son opcionales al registrar gasolina. En reparaciones y mantenimiento debo describir el trabajo realizado.
 
-Los mockups conservan el diseño inicial con datos ficticios. Las imágenes todavía muestran funciones propuestas como comprobantes y mapa. La aplicación implementa cuatro pantallas XML; la Tarea 5 incorpora Movimientos con búsqueda por ID, detalle y formulario de edición.
+## Estructura y tecnologías
 
-![Vista general de los mockups](docs/mockups/overview.png)
+| Componente | Implementación |
+| --- | --- |
+| Inicio y resumen mensual | `DashboardActivity` / `activity_dashboard.xml` |
+| Lista y búsqueda por ID | `HistoryActivity` / `activity_history.xml` |
+| Crear y editar | `TransactionEditActivity` / `activity_transaction_edit.xml` |
+| Detalle y eliminación | `DetailActivity` / `activity_detail.xml` |
+| Filas del listado | `TransactionListAdapter` / `item_transaction.xml` |
+| Modelos y reglas | `domain/model/Transaction.kt` |
+| Interfaz de almacenamiento | `domain/repository/TransactionRepository.kt` |
+| Datos e IDs consecutivos | `data/memory/MemoryDataRepository.kt` |
+| Acceso compartido a los datos | `viewmodel/TransactionViewModel.kt` |
+| Dinero, fechas, navegación y confirmaciones | `util/` |
 
-| Pantalla | Mockup | Activity y layout |
-| --- | --- | --- |
-| Resumen mensual | [Diseño](docs/mockups/01-dashboard.png) | `DashboardActivity` / `activity_dashboard.xml` |
-| Movimientos con búsqueda por ID | [Diseño](docs/mockups/02-history.png) | `HistoryActivity` / `activity_history.xml` |
-| Crear o editar movimiento | [Diseño](docs/mockups/03-editor.png) | `TransactionEditActivity` / `activity_transaction_edit.xml` |
-| Detalle y acciones | [Diseño](docs/mockups/04-detail.png) | `DetailActivity` / `activity_detail.xml` |
-| Ubicación del gasto (propuesta futura) | [Diseño](docs/mockups/05-location.png) | Pendiente |
+Utilicé Kotlin, layouts XML, `findViewById`, `Intent`, `RecyclerView`, `DatePickerDialog` y `AlertDialog`, siguiendo el patrón del proyecto de clase. La aplicación conserva el repositorio en memoria. Los montos se calculan en centésimos con números enteros para conservar los decimales; el formulario admite coma o punto sin separadores de miles.
 
-Los formularios son desplazables. El monto tiene ejemplos y validación; los campos del vehículo aparecen según la categoría. Ingresos y gastos se distinguen mediante texto, signo y color. Se muestran estados sin datos, validaciones y confirmación de eliminación. Los controles respetan las barras del sistema y el teclado.
+### Almacenamiento de esta entrega
 
-## Estructura del proyecto
+Los movimientos se comparten entre las pantallas mientras el proceso de la aplicación está activo. **Al finalizar el proceso, se borran los registros y la numeración vuelve a empezar en 1.** Esta versión todavía no utiliza Room ni almacenamiento permanente.
 
-```text
-app/src/main/java/com/marioespinoza/mibalance/
-├── domain/
-│   ├── model/Transaction.kt
-│   └── repository/TransactionRepository.kt
-├── data/memory/MemoryDataRepository.kt
-├── viewmodel/TransactionViewModel.kt
-├── ui/ (cuatro Activities y TransactionListAdapter)
-└── util/ (dinero, fechas, navegación y etiquetas)
+## Comprobación de los requisitos de Tarea 5
+
+| Requisito del profesor | Lo que implementé |
+| --- | --- |
+| CRUD completo | Crear, consultar, actualizar y eliminar ingresos y gastos mediante lista, detalle y formulario |
+| Diálogo al actualizar | Confirmar o cancelar antes de guardar cambios |
+| Diálogo al eliminar | Confirmar o cancelar desde detalle o formulario |
+| Búsqueda para editar | Buscar un ID, seleccionar el movimiento y abrir su edición |
+| Código en inglés | Clases, funciones, variables e identificadores en inglés |
+| Rama temporal, commits y push | Cambios publicados en `task5-MarioEspinoza-MiBalance` |
+| PR hacia `main` con descripción y profesor como revisor | [PR #2](https://github.com/MarioEspinoza16/TareasAppsMoviles/pull/2), listo para revisión; revisión solicitada a `ebarahonautn` |
+
+## Abrir y ejecutar
+
+Desde PowerShell puedo descargar esta rama en una carpeta nueva:
+
+```powershell
+git clone --branch task5-MarioEspinoza-MiBalance --single-branch https://github.com/MarioEspinoza16/TareasAppsMoviles.git MiBalance-Tarea5
+cd .\MiBalance-Tarea5
 ```
 
-La base del proyecto sigue el patrón en memoria de [semana7 de TaskManager](https://github.com/utn-app-movil/task-mngr-g1/tree/semana7). Para Tarea 5 agregué búsqueda y diálogos `AlertDialog`, también utilizados en el ejemplo de clase de semana 9. La captura del enunciado recibida solicita CRUD, búsqueda y confirmaciones; esta entrega conserva el repositorio en memoria. Las Activities usan `setContentView`, `findViewById` y `Intent`. El historial usa un `RecyclerView` con adaptador y listener. El ViewModel comparte una instancia del repositorio en memoria, como `TaskViewModel` con `TaskMemoryManager` en el ejemplo de clase.
+En Android Studio abro la carpeta que contiene `settings.gradle.kts`, sincronizo Gradle, selecciono el módulo `app` y mi dispositivo, y presiono **Run**.
 
-Los montos se calculan con números enteros en centésimos para conservar los decimales. El formulario admite coma o punto sin separadores de miles. La fecha se elige con `DatePickerDialog`.
+El proyecto usa AGP 8.7.3, Gradle 8.9, Kotlin 2.0.21, JDK 17, SDK 35 y Build Tools 35.0.0. La versión mínima es Android 8.0/API 26. `local.properties` corresponde al SDK de cada computadora y no se comparte.
 
-## Requisitos de las tareas
+Para actualizar un clon existente, primero reviso `git status` y luego ejecuto `git pull --ff-only origin task5-MarioEspinoza-MiBalance` dentro de la rama de la tarea.
 
-| Tarea | Requisito | Implementación |
-| --- | --- | --- |
-| 2 | Definición individual y descripción | Este README |
-| 2 | Mockups y UX | `docs/mockups/` y tabla de pantallas |
-| 2 | CRUD, filtros, cámara/galería, diálogos, mapa | CRUD, búsqueda por ID, resumen mensual y selector de fecha implementados. Cámara, galería y mapa quedan como propuesta para más adelante. |
-| 3 | Modelos y clases generales | `domain/model/`, `util/` |
-| 3 | Interfaz de repositorio | `domain/repository/` |
-| 3 | MemoryDataRepository | `data/memory/` |
-| 3 | ViewModels | `viewmodel/` |
-| 3 y 4 | Código en inglés | Identificadores y comentarios en inglés |
-| 3 y 4 | Recursos en dos idiomas | `res/values/strings.xml` y `res/values-es/strings.xml` |
-| 4 | Activities y layouts según mockups | Cuatro Activities y cuatro layouts XML |
-| 5 | CRUD completo | Movimientos permite buscar y seleccionar; detalle y formulario permiten consultar, actualizar y eliminar con confirmación |
-| 5 | Diálogos al actualizar y eliminar | `confirmAction` con confirmar/cancelar; eliminación también desde detalle |
-| 5 | Búsqueda para entrar en modo edición | ID numérico exacto en Movimientos, lista con ID y nombre, acceso al detalle y edición |
-| 5 | Código en inglés | Clases, funciones, variables, recursos e identificadores en inglés; traducciones de interfaz separadas |
-| 5 | Rama temporal y PR hacia main | `task5-MarioEspinoza-MiBalance`; aprobación del profesor antes de merge |
+## Pruebas realizadas
 
-## Abrir y ejecutar en Android Studio
-
-1. Clonar el repositorio o extraer el proyecto y abrir la carpeta que contiene `settings.gradle.kts`.
-2. Usar una versión de Android Studio compatible con AGP 8.7.3 (Ladybug o posterior). Configurar **Gradle JDK 17** en los ajustes de Gradle; no editar versiones automáticamente si ya sincroniza.
-3. Instalar Android SDK Platform 35 y Build Tools 35.0.0 desde SDK Manager si se solicitan.
-4. Esperar la sincronización con acceso a internet. Gradle Wrapper utiliza Gradle 8.9; Kotlin 2.0.21.
-5. Ejecutar la configuración `app` en un dispositivo o emulador Android 8.0/API 26 o superior.
-
-Android Studio crea `local.properties` para el SDK de cada computadora; ese archivo no se comparte.
-
-En Windows, desde PowerShell en la raíz:
+- **19 pruebas automatizadas aprobadas:** 11 de JUnit y 8 de Robolectric.
+- Verifiqué IDs consecutivos, conservación de IDs al editar y eliminación sin reutilizarlos.
+- Probé una lista con 50 movimientos de distintas fechas y la búsqueda exacta por ID.
+- Comprobé confirmación/cancelación, navegación, copia de ID y recreación del formulario.
+- **Android Lint:** sin errores; conserva advertencias no bloqueantes.
+- **Compilación del APK:** correcta.
+- **Prueba en mi HONOR:** confirmé que el flujo actualizado funciona como quería.
 
 ```powershell
 .\gradlew.bat testDebugUnitTest lintDebug assembleDebug
 ```
 
-El APK se genera en `app/build/outputs/apk/debug/app-debug.apk`. Es una compilación de prueba, no una publicación en Play Store.
-
-## Prueba en mi celular HONOR
-
-Consultar [la guía de instalación y entrega](docs/INSTALL_AND_DELIVERY.md). La compatibilidad mínima del proyecto es Android 8.0; MagicOS por sí solo no identifica la versión de Android. Confirmar esa versión en Ajustes → Acerca del teléfono.
-
-## Datos en memoria
-
-Los movimientos se comparten entre las pantallas mientras el proceso de MiBalance sigue activo. Al finalizar el proceso, la lista vuelve a estar vacía. En el formulario, tocá el botón de tipo o categoría para recorrer las opciones. Los IDs se asignan al guardar y comparten una secuencia para ingresos y gastos. Editar conserva el ID; eliminar no renumera los demás ni reutiliza ese número. Como el almacenamiento sigue siendo en memoria, al terminar el proceso se borran los registros y el contador vuelve a empezar en 1.
-
-## Verificación
-
-Ver [VALIDATION.md](docs/VALIDATION.md) para los resultados de esta versión y [MANUAL_TESTS.md](docs/MANUAL_TESTS.md) para el recorrido de prueba.
+El APK de depuración se genera en `app/build/outputs/apk/debug/app-debug.apk`. Los resultados están en [VALIDATION.md](docs/VALIDATION.md) y el recorrido de prueba está en [MANUAL_TESTS.md](docs/MANUAL_TESTS.md).
 
 ## Entrega y revisión
 
-La rama de trabajo y el título del PR son **`task5-MarioEspinoza-MiBalance`**, con destino `main`. La rama incluye el código de la Tarea 4 como base porque ese avance aún no está fusionado en `main`.
+Mi Pull Request es **[task5-MarioEspinoza-MiBalance — PR #2](https://github.com/MarioEspinoza16/TareasAppsMoviles/pull/2)**, con destino `main`. La rama incluye la Tarea 4 como base porque ese avance aún no está fusionado en `main`.
 
-Debo agregar al profesor **ebarahonautn** como revisor, entregar la URL del PR en el campus y esperar su aprobación antes de hacer merge. La descripción está preparada en [PR_DESCRIPTION.md](docs/PR_DESCRIPTION.md).
-
-## Créditos técnicos
-
-- [Android Developers](https://developer.android.com/) — plataforma, AndroidX y herramientas.
-- [Material Components for Android](https://github.com/material-components/material-components-android) — componentes de interfaz.
+El PR ya está listo para revisión y solicité la revisión del profesor **ebarahonautn**. Debo entregar el enlace del PR en el campus y esperar su aprobación antes de hacer el merge.

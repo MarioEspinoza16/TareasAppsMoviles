@@ -24,4 +24,4 @@ En Linux se usa `./gradlew` con las mismas tareas. La configuración local del S
 - Confirmar/cancelar actualización y eliminación; recreación de la Activity en modo Nuevo; copia del ID de la fila correcta.
 - Restablecimiento de la lista al volver después de guardar o eliminar un movimiento buscado.
 
-El flujo actualizado todavía debe revisarse en el HONOR. Ver [MANUAL_TESTS.md](MANUAL_TESTS.md). El repositorio sigue en memoria: finalizar el proceso borra los movimientos y reinicia la secuencia.
+Mario confirmó en su HONOR que el flujo actualizado funciona como esperaba. Ver [MANUAL_TESTS.md](MANUAL_TESTS.md). El repositorio sigue en memoria: finalizar el proceso borra los movimientos y reinicia la secuencia.
