@@ -73,6 +73,17 @@
     <string name="transaction_meta">%1$s · %2$s</string>
     <string name="date_button">Date · %1$s</string>
     <string name="confirm_delete">Confirm deletion</string>
+    <string name="delete_question">Delete this transaction? This cannot be undone.</string>
+    <string name="confirm_update">Confirm update</string>
+    <string name="update_question">Save the changes to this transaction?</string>
+    <string name="update">Update transaction</string>
+    <string name="search">Search to edit</string>
+    <string name="search_hint">Search by description or transaction ID</string>
+    <string name="error_search">Enter a description or transaction ID.</string>
+    <string name="select_transaction">Select a transaction to edit</string>
+    <string name="transaction_id_value">ID: %1$s</string>
+    <string name="new_transaction_hint">New transaction: the ID is generated when saving.</string>
+    <string name="search_result">%1$s · %2$s\n%3$s · %4$s\nID: %5$s</string>
     <string name="change_category">Category (tap to change)</string>
     <string name="change_type">Transaction type (tap to change)</string>
 </resources>

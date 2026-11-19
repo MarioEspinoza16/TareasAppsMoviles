@@ -44,6 +44,16 @@ class FinanceTest {
         assertEquals(1, repository.getAll().size); assertEquals(200L, repository.findById(row.id)?.amountMinor)
         repository.delete(row.id); assertNull(repository.findById(row.id))
     }
+    @Test fun searchFindsDescriptionsAndIdsAcrossMonthsWithoutChangingRecords() {
+        val repository = MemoryDataRepository()
+        val row = expense(100, date = LocalDate.of(2025, 1, 1)).copy(description = "Oil CHANGE")
+        repository.save(row)
+        assertEquals(listOf(row), repository.search("  oil change  "))
+        assertEquals(listOf(row), repository.search(row.id.uppercase()))
+        assertTrue(repository.search("   ").isEmpty())
+        assertTrue(repository.search("unknown").isEmpty())
+        assertEquals(listOf(row), repository.getAll())
+    }
     @Test(expected = IllegalArgumentException::class) fun categoryMustMatchType() {
         Transaction(type = TransactionType.INCOME, amountMinor = 100, date = LocalDate.now(), category = Category.FUEL)
     }

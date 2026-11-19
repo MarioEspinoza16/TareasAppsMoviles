@@ -14,6 +14,8 @@ class TransactionViewModel : ViewModel() {
 
         fun getTransaction(id: String): Transaction? = repository.findById(id)
 
+        fun searchTransactions(query: String): List<Transaction> = repository.search(query)
+
         fun saveTransaction(transaction: Transaction) {
             repository.save(transaction)
         }

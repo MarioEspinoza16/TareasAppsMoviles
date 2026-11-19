@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.marioespinoza.mibalance.R
@@ -12,8 +14,10 @@ import com.marioespinoza.mibalance.domain.model.Category
 import com.marioespinoza.mibalance.domain.model.Transaction
 import com.marioespinoza.mibalance.domain.model.TransactionType
 import com.marioespinoza.mibalance.util.Money
+import com.marioespinoza.mibalance.util.confirmAction
 import com.marioespinoza.mibalance.util.dateText
 import com.marioespinoza.mibalance.util.labelRes
+import com.marioespinoza.mibalance.util.money
 import com.marioespinoza.mibalance.util.setupScreen
 import com.marioespinoza.mibalance.util.toast
 import com.marioespinoza.mibalance.viewmodel.TransactionViewModel
@@ -30,7 +34,11 @@ class TransactionEditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_transaction_edit)
         setupScreen()
 
-        val id = intent.getStringExtra("transaction_id")
+        val id = if (savedInstanceState != null) {
+            savedInstanceState.getString("editing_id")
+        } else {
+            intent.getStringExtra("transaction_id")
+        }
         existing = id?.let { TransactionViewModel.getTransaction(it) }
         if (id != null && existing == null) {
             toast(R.string.error_not_found)
@@ -44,14 +52,8 @@ class TransactionEditActivity : AppCompatActivity() {
         category = savedCategory?.let(Category::valueOf) ?: transaction?.category ?: categories().first()
         val savedDate = savedInstanceState?.getString("date")
         date = savedDate?.let(LocalDate::parse) ?: transaction?.date ?: date
-        if (transaction != null) {
-            findViewById<MaterialToolbar>(R.id.toolbar).setTitle(R.string.edit_transaction)
-            if (savedInstanceState == null) {
-                findViewById<EditText>(R.id.amount).setText(Money.input(transaction.amountMinor))
-                findViewById<EditText>(R.id.description).setText(transaction.description)
-                findViewById<EditText>(R.id.odometer).setText(transaction.odometerKm?.toString().orEmpty())
-                findViewById<EditText>(R.id.liters).setText(transaction.fuelLiters.orEmpty())
-            }
+        if (transaction != null && savedInstanceState == null) {
+            fillFields(transaction)
         }
 
         findViewById<Button>(R.id.type).setOnClickListener {
@@ -71,12 +73,98 @@ class TransactionEditActivity : AppCompatActivity() {
             }, date.year, date.monthValue - 1, date.dayOfMonth).show()
         }
         findViewById<Button>(R.id.save).setOnClickListener { save() }
+        findViewById<Button>(R.id.search).setOnClickListener { searchTransactions() }
+        findViewById<Button>(R.id.newTransaction).setOnClickListener { clearForm() }
+        findViewById<Button>(R.id.delete).setOnClickListener { deleteTransaction() }
         findViewById<Button>(R.id.cancel).setOnClickListener { finish() }
+        showMode()
         showSelection()
         showDate()
     }
 
     private fun categories() = Category.entries.filter { it.type == type }
+
+    private fun fillFields(transaction: Transaction) {
+        existing = transaction
+        type = transaction.type
+        category = transaction.category
+        date = transaction.date
+        findViewById<EditText>(R.id.amount).setText(Money.input(transaction.amountMinor))
+        findViewById<EditText>(R.id.description).setText(transaction.description)
+        findViewById<EditText>(R.id.odometer).setText(transaction.odometerKm?.toString().orEmpty())
+        findViewById<EditText>(R.id.liters).setText(transaction.fuelLiters.orEmpty())
+        clearErrors()
+        showMode()
+        showSelection()
+        showDate()
+    }
+
+    private fun showMode() {
+        val transaction = existing
+        findViewById<MaterialToolbar>(R.id.toolbar).setTitle(
+            if (transaction == null) R.string.new_transaction else R.string.edit_transaction
+        )
+        findViewById<TextView>(R.id.transactionId).text = transaction?.let {
+            getString(R.string.transaction_id_value, it.id)
+        } ?: getString(R.string.new_transaction_hint)
+        findViewById<Button>(R.id.save).setText(
+            if (transaction == null) R.string.save else R.string.update
+        )
+        findViewById<Button>(R.id.delete).visibility = if (transaction == null) View.GONE else View.VISIBLE
+    }
+
+    private fun clearErrors() {
+        listOf(R.id.amount, R.id.description, R.id.odometer, R.id.liters, R.id.searchQuery).forEach {
+            findViewById<EditText>(it).error = null
+        }
+    }
+
+    private fun clearForm() {
+        existing = null
+        type = TransactionType.EXPENSE
+        category = Category.FUEL
+        date = LocalDate.now()
+        listOf(R.id.amount, R.id.description, R.id.odometer, R.id.liters, R.id.searchQuery).forEach {
+            findViewById<EditText>(it).setText("")
+        }
+        clearErrors()
+        showMode()
+        showSelection()
+        showDate()
+    }
+
+    private fun searchTransactions() {
+        val queryField = findViewById<EditText>(R.id.searchQuery)
+        val query = queryField.text.toString().trim()
+        if (query.isBlank()) {
+            queryField.error = getString(R.string.error_search)
+            return
+        }
+        queryField.error = null
+        val matches = TransactionViewModel.searchTransactions(query)
+        if (matches.isEmpty()) {
+            toast(R.string.error_not_found)
+            return
+        }
+        val labels = matches.map {
+            getString(R.string.search_result, dateText(it.date), money(it.amountMinor),
+                getString(it.category.labelRes), it.description.ifBlank { getString(R.string.no_description) }, it.id)
+        }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.select_transaction)
+            .setItems(labels) { _, position -> fillFields(matches[position]) }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun deleteTransaction() {
+        val transaction = existing ?: return
+        confirmAction(R.string.confirm_delete, R.string.delete_question, R.string.delete) {
+            TransactionViewModel.removeTransaction(transaction.id)
+            clearForm()
+            toast(R.string.deleted)
+        }
+    }
 
     private fun showSelection() {
         findViewById<Button>(R.id.type).setText(if (type == TransactionType.INCOME) R.string.income else R.string.expense)
@@ -131,12 +219,24 @@ class TransactionEditActivity : AppCompatActivity() {
         )
         val previous = existing
         if (previous != null) transaction = transaction.copy(id = previous.id)
+        val transactionToSave = transaction
+        if (previous == null) {
+            persistTransaction(transactionToSave)
+        } else {
+            confirmAction(R.string.confirm_update, R.string.update_question, R.string.update) {
+                persistTransaction(transactionToSave)
+            }
+        }
+    }
+
+    private fun persistTransaction(transaction: Transaction) {
         TransactionViewModel.saveTransaction(transaction)
+        fillFields(transaction)
         toast(R.string.saved)
-        finish()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("editing_id", existing?.id)
         outState.putString("type", type.name)
         outState.putString("category", category.name)
         outState.putString("date", date.toString())

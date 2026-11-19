@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.marioespinoza.mibalance.R
 import com.marioespinoza.mibalance.domain.model.TransactionType
 import com.marioespinoza.mibalance.util.dateText
+import com.marioespinoza.mibalance.util.confirmAction
 import com.marioespinoza.mibalance.util.labelRes
 import com.marioespinoza.mibalance.util.money
 import com.marioespinoza.mibalance.util.setupScreen
@@ -16,8 +17,6 @@ import com.marioespinoza.mibalance.util.toast
 import com.marioespinoza.mibalance.viewmodel.TransactionViewModel
 
 class DetailActivity : AppCompatActivity() {
-    private var confirmDelete = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -52,17 +51,11 @@ class DetailActivity : AppCompatActivity() {
         findViewById<Button>(R.id.edit).setOnClickListener {
             startActivity(Intent(this, TransactionEditActivity::class.java).putExtra("transaction_id", transaction.id))
         }
-        val delete = findViewById<Button>(R.id.delete)
-        confirmDelete = false
-        delete.setText(R.string.delete)
-        delete.setOnClickListener {
-            if (confirmDelete) {
+        findViewById<Button>(R.id.delete).setOnClickListener {
+            confirmAction(R.string.confirm_delete, R.string.delete_question, R.string.delete) {
                 TransactionViewModel.removeTransaction(transaction.id)
                 toast(R.string.deleted)
                 finish()
-            } else {
-                confirmDelete = true
-                delete.setText(R.string.confirm_delete)
             }
         }
     }

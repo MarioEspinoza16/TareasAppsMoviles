@@ -71,6 +71,17 @@
     <string name="transaction_meta">%1$s · %2$s</string>
     <string name="date_button">Fecha · %1$s</string>
     <string name="confirm_delete">Confirmar eliminación</string>
+    <string name="delete_question">¿Eliminar este movimiento? Esta acción no se puede deshacer.</string>
+    <string name="confirm_update">Confirmar actualización</string>
+    <string name="update_question">¿Guardar los cambios de este movimiento?</string>
+    <string name="update">Actualizar movimiento</string>
+    <string name="search">Buscar para editar</string>
+    <string name="search_hint">Buscar por descripción o ID del movimiento</string>
+    <string name="error_search">Ingresá una descripción o el ID del movimiento.</string>
+    <string name="select_transaction">Seleccioná un movimiento para editar</string>
+    <string name="transaction_id_value">ID: %1$s</string>
+    <string name="new_transaction_hint">Nuevo movimiento: el ID se genera al guardar.</string>
+    <string name="search_result">%1$s · %2$s\n%3$s · %4$s\nID: %5$s</string>
     <string name="change_category">Categoría (tocá para cambiar)</string>
     <string name="change_type">Tipo de movimiento (tocá para cambiar)</string>
 </resources>

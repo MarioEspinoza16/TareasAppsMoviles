@@ -8,7 +8,7 @@
 4. En la configuración de Gradle seleccioná JDK 17. No hace falta modificar tu instalación global de Java.
 5. Seleccioná el módulo `app` para ejecutar.
 
-Si trabajás desde un clon existente de TareasAppsMoviles, revisá primero `git status`. Con el árbol limpio, actualizá la rama de la tarea mediante `git switch task4-MiBalance-MarioEspinoza` y `git pull --ff-only`.
+Si trabajás desde un clon existente de TareasAppsMoviles, revisá primero `git status`. Con el árbol limpio, actualizá la rama de la tarea mediante `git switch task5-MarioEspinoza-MiBalance` y `git pull --ff-only`.
 
 ## B. Ejecutar en el HONOR
 
@@ -33,13 +33,13 @@ Si los cambios todavía están solo en tu computadora:
 
 ```powershell
 git status
-git switch -c task4-MiBalance-MarioEspinoza
+git switch -c task5-MarioEspinoza-MiBalance
 git add .
-git commit -m "Build MiBalance finance app and task 4 layouts"
-git push -u origin task4-MiBalance-MarioEspinoza
+git commit -m "Complete task 5 transaction CRUD, search and confirmation dialogs"
+git push -u origin task5-MarioEspinoza-MiBalance
 ```
 
-Si la rama ya existe, usá `git switch task4-MiBalance-MarioEspinoza` y no repitas `git switch -c`. Verificá antes de usar los comandos que el remoto apunta a `https://github.com/MarioEspinoza16/TareasAppsMoviles.git` y que el directorio corresponde al proyecto correcto.
+Si la rama ya existe, usá `git switch task5-MarioEspinoza-MiBalance` y no repitas `git switch -c`. Verificá antes de usar los comandos que el remoto apunta a `https://github.com/MarioEspinoza16/TareasAppsMoviles.git` y que el directorio corresponde al proyecto correcto.
 
 No subás `local.properties`, `.idea`, `.gradle`, carpetas `build`, claves de firma ni credenciales. El `.gitignore` ya los excluye.
 
@@ -55,8 +55,8 @@ Estas acciones no quedan confirmadas por la existencia del código local. Deben 
 ## F. Pull Request y campus
 
 - Base: `main`.
-- Rama: `task4-MiBalance-MarioEspinoza`.
-- Título: `task4-MiBalance-MarioEspinoza`.
+- Rama: `task5-MarioEspinoza-MiBalance`.
+- Título: `task5-MarioEspinoza-MiBalance`.
 - Descripción: copiar y ajustar `PR_DESCRIPTION.md` con los resultados reales.
 - Reviewer: **ebarahonautn**, una vez que tenga acceso.
 - Entrega en el campus: **URL del PR**, no solo el enlace general del repositorio.

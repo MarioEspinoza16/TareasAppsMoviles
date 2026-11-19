@@ -4,7 +4,7 @@
 
 **Autor:** Mario Espinoza · **Curso:** ITI-623 · UTN Sede del Pacífico
 **Modalidad:** individual · **Repositorio:** TareasAppsMoviles
-**Entrega actual:** Tarea 4 — Layout design and activities creation.
+**Entrega actual:** Tarea 5 — CRUD, búsqueda y diálogos de confirmación.
 
 ## Problema que quiero resolver
 
@@ -18,7 +18,9 @@ Como conductor y estudiante necesito saber cuánto dinero recibo, en qué lo gas
 - Registrar kilometraje opcional en gastos del vehículo y litros opcionales al cargar gasolina.
 - Filtrar el historial por mes, año, tipo y categoría.
 - Consultar ingresos, gastos, saldo y distribución de gastos por categoría.
-- Confirmar la eliminación con una segunda pulsación.
+- Buscar movimientos por descripción o ID desde el formulario y seleccionar uno para editar.
+- Confirmar la actualización y la eliminación mediante diálogos con opciones de confirmar o cancelar.
+- Crear, consultar, actualizar y eliminar desde `TransactionEditActivity`.
 - Mostrar los textos en español o inglés según el idioma del dispositivo.
 - Mantener los movimientos en memoria durante la sesión de la aplicación.
 
@@ -36,7 +38,7 @@ Como conductor y estudiante necesito saber cuánto dinero recibo, en qué lo gas
 
 ## Mockups y pantallas
 
-Los mockups conservan el diseño inicial con datos ficticios. Las imágenes todavía muestran funciones propuestas como comprobantes y mapa. La versión ajustada a semana 7 implementa cuatro pantallas XML.
+Los mockups conservan el diseño inicial con datos ficticios. Las imágenes todavía muestran funciones propuestas como comprobantes y mapa. La aplicación implementa cuatro pantallas XML; la Tarea 5 amplía el formulario con búsqueda y CRUD completo.
 
 ![Vista general de los mockups](docs/mockups/overview.png)
 
@@ -63,7 +65,7 @@ app/src/main/java/com/marioespinoza/mibalance/
 └── util/ (dinero, fechas, navegación y etiquetas)
 ```
 
-El proyecto sigue el patrón de la rama [semana7 de TaskManager](https://github.com/utn-app-movil/task-mngr-g1/tree/semana7). Las Activities usan `setContentView`, `findViewById` y `Intent`. El historial usa un `RecyclerView` con adaptador y listener. El ViewModel comparte una instancia del repositorio en memoria, como `TaskViewModel` con `TaskMemoryManager` en el ejemplo de clase.
+La base del proyecto sigue el patrón en memoria de [semana7 de TaskManager](https://github.com/utn-app-movil/task-mngr-g1/tree/semana7). Para Tarea 5 agregué búsqueda y diálogos `AlertDialog`, también utilizados en el ejemplo de clase de semana 9. La captura del enunciado recibida solicita CRUD, búsqueda y confirmaciones; esta entrega conserva el repositorio en memoria. Las Activities usan `setContentView`, `findViewById` y `Intent`. El historial usa un `RecyclerView` con adaptador y listener. El ViewModel comparte una instancia del repositorio en memoria, como `TaskViewModel` con `TaskMemoryManager` en el ejemplo de clase.
 
 Los montos se calculan con números enteros en centésimos para conservar los decimales. El formulario admite coma o punto sin separadores de miles. La fecha se elige con `DatePickerDialog`.
 
@@ -81,7 +83,11 @@ Los montos se calculan con números enteros en centésimos para conservar los de
 | 3 y 4 | Código en inglés | Identificadores y comentarios en inglés |
 | 3 y 4 | Recursos en dos idiomas | `res/values/strings.xml` y `res/values-es/strings.xml` |
 | 4 | Activities y layouts según mockups | Cuatro Activities y cuatro layouts XML |
-| 2–4 | Acceso del profesor, protección de main, PR y revisión | PR #1 abierto y protección de main configurada. La revisión depende de la aceptación del profesor. |
+| 5 | Activity con CRUD completo | `TransactionEditActivity`: crear, buscar/consultar, actualizar y eliminar |
+| 5 | Diálogos al actualizar y eliminar | `confirmAction` con confirmar/cancelar; eliminación también desde detalle |
+| 5 | Búsqueda para entrar en modo edición | Descripción o ID, sin limitar al mes seleccionado en el historial |
+| 5 | Código en inglés | Clases, funciones, variables, recursos e identificadores en inglés; traducciones de interfaz separadas |
+| 5 | Rama temporal y PR hacia main | `task5-MarioEspinoza-MiBalance`; aprobación del profesor antes de merge |
 
 ## Abrir y ejecutar en Android Studio
 
@@ -115,9 +121,9 @@ Ver [VALIDATION.md](docs/VALIDATION.md) para los resultados de esta versión y [
 
 ## Entrega y revisión
 
-La rama de trabajo es `task4-MiBalance-MarioEspinoza`. El título del PR debe ser **task4-MiBalance-MarioEspinoza** y su destino `main`. Se debe solicitar revisión a **ebarahonautn**, entregar la URL del PR en el campus y esperar la aprobación antes del merge.
+La rama de trabajo y el título del PR son **`task5-MarioEspinoza-MiBalance`**, con destino `main`. La rama incluye el código de la Tarea 4 como base porque ese avance aún no está fusionado en `main`.
 
-Las bases de las tareas 2 y 3 se incluyen como trabajo realizado ahora para dar continuidad a la tarea 4; no se presentan como entregas anteriores. La captura de la tarea 3 utiliza el prefijo `task2-` para el PR, aunque su encabezado dice tarea 3; conviene confirmar esa inconsistencia si se solicita una entrega independiente.
+Debo agregar al profesor **ebarahonautn** como revisor, entregar la URL del PR en el campus y esperar su aprobación antes de hacer merge. La descripción está preparada en [PR_DESCRIPTION.md](docs/PR_DESCRIPTION.md).
 
 ## Créditos técnicos
 

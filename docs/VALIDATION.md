@@ -1,11 +1,24 @@
-# Validación de MiBalance
+# Validación de MiBalance — Tarea 5
 
-La revisión ajustada a semana 7 usa JUnit para comprobar el manejo de montos, el cálculo del saldo, los filtros y las operaciones del repositorio en memoria.
+Comando desde la raíz del proyecto en PowerShell:
 
 ```powershell
 .\gradlew.bat testDebugUnitTest lintDebug assembleDebug
 ```
 
-La compilación, JUnit y Android Lint pasaron en la [ejecución de verificación](https://github.com/MarioEspinoza16/TareasAppsMoviles/actions/runs/42258646014) del commit `69e0614`. La revisión final conserva el mismo código de la app y retira el flujo de GitHub Actions.
+En Linux se usa `./gradlew` con las mismas tareas. La configuración local del SDK y la red no forma parte del repositorio.
 
-El recorrido en el teléfono se describe en [Pruebas manuales](MANUAL_TESTS.md).
+## Cobertura
+
+- JUnit: montos decimales, validaciones, totales, categorías, filtros, actualización sin duplicados, eliminación y búsqueda por descripción/ID entre meses.
+- Robolectric (Android API 28): CRUD del formulario, selección de resultados, confirmación/cancelación de actualización y eliminación, eliminación desde detalle y recreación de la Activity después de cambiar a modo Nuevo.
+- Android Lint y compilación del APK de depuración.
+
+## Resultados — 19 de noviembre de 2026
+
+- `testDebugUnitTest`: 15 pruebas aprobadas (10 de JUnit y 5 de Robolectric), sin fallos.
+- `lintDebug`: completado sin errores. Las advertencias del informe no bloquean la compilación.
+- `assembleDebug`: compilación correcta; APK generado en `app/build/outputs/apk/debug/app-debug.apk`.
+- `git diff --check`: sin errores de formato.
+
+El recorrido en un teléfono físico sigue pendiente y se detalla en [MANUAL_TESTS.md](MANUAL_TESTS.md).

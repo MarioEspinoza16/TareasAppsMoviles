@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
@@ -32,6 +33,15 @@ fun AppCompatActivity.setupScreen(back: Boolean = true) {
 
 fun AppCompatActivity.toast(message: Int) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun AppCompatActivity.confirmAction(title: Int, message: Int, action: Int, onConfirm: () -> Unit) {
+    AlertDialog.Builder(this)
+        .setTitle(title)
+        .setMessage(message)
+        .setNegativeButton(R.string.cancel, null)
+        .setPositiveButton(action) { _, _ -> onConfirm() }
+        .show()
 }
 
 fun AppCompatActivity.openDetail(transaction: Transaction) {

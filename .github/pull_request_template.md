@@ -1,9 +1,11 @@
-## MiBalance · Tarea 4
+## Changes
 
-Aplicación Android para registrar ingresos y gastos durante la sesión y consultar el saldo mensual. La revisión usa como referencia la rama semana7 de TaskManager.
+Describe the implemented functionality and the assignment requirements it covers.
 
-- Activities Kotlin con layouts XML, `findViewById`, navegación con `Intent` y selector de fecha.
-- Modelos de transacción, interfaz de repositorio, lista en memoria y un ViewModel.
-- Historial con `RecyclerView`, adaptador y listener, filtros y edición de movimientos.
-- SQLite, View Binding, corrutinas, LiveData, cámara, galería y mapa quedan fuera de esta versión.
-- Los mockups iniciales se conservan como referencia del diseño y de las funciones propuestas.
+## Validation
+
+List the checks actually run, their results and any remaining device checks.
+
+## Delivery
+
+Target main, request professor ebarahonautn as reviewer and submit the PR URL in campus. Wait for professor approval before merging.
