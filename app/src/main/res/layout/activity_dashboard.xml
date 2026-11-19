@@ -19,6 +19,7 @@
             <TextView android:id="@+id/expenses" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/expense_total" android:layout_marginTop="12dp" android:textColor="@color/expense"/>
             <TextView android:id="@+id/vehicle" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/vehicle_total" android:layout_marginTop="12dp"/>
             <TextView android:id="@+id/vehicleNote" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/vehicle_note"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/history" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/movements" android:layout_marginTop="12dp"/>
             <com.google.android.material.button.MaterialButton android:id="@+id/addIncome" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/add_income" android:layout_marginTop="16dp"/>
             <com.google.android.material.button.MaterialButton android:id="@+id/addExpense" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/add_expense" style="@style/Widget.Material3.Button.OutlinedButton"/>
             <TextView android:id="@+id/breakdownTitle" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/category_breakdown" android:layout_marginTop="24dp"/>
@@ -26,7 +27,6 @@
             <TextView android:id="@+id/recentTitle" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/SectionTitle" android:text="@string/recent_transactions" android:layout_marginTop="24dp"/>
             <TextView android:id="@+id/empty" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/empty_message" android:layout_marginTop="12dp"/>
             <androidx.recyclerview.widget.RecyclerView android:id="@+id/recent" android:layout_width="match_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false"/>
-            <com.google.android.material.button.MaterialButton android:id="@+id/history" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/view_history" style="@style/Widget.Material3.Button.TextButton" android:layout_marginTop="12dp"/>
             <TextView android:id="@+id/privacy" android:layout_width="match_parent" android:layout_height="wrap_content" style="@style/Body" android:text="@string/privacy_note" android:layout_marginTop="12dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

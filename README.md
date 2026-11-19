@@ -13,13 +13,14 @@ Como conductor y estudiante necesito saber cuánto dinero recibo, en qué lo gas
 ## Alcance y funcionalidades
 
 - Crear, consultar, editar y eliminar ingresos y gastos.
-- Seleccionar fecha, monto en CRC, tipo, categoría y descripción.
+- Seleccionar fecha, monto en CRC, tipo, categoría y nombre/descripción obligatoria.
 - Describir obligatoriamente el mantenimiento o la reparación realizada.
 - Registrar kilometraje opcional en gastos del vehículo y litros opcionales al cargar gasolina.
-- Filtrar el historial por mes, año, tipo y categoría.
+- Cambiar el mes del resumen; la pantalla Movimientos siempre permite consultar todas las fechas.
 - Consultar ingresos, gastos, saldo y distribución de gastos por categoría.
-- Mostrar el ID completo junto a cada movimiento del historial y los movimientos recientes, con botón Copiar ID.
-- Buscar movimientos por descripción o ID desde el formulario y seleccionar uno para editar.
+- Mostrar IDs consecutivos (1, 2, 3…) junto al nombre de cada movimiento, con botón Copiar ID.
+- Abrir Movimientos desde el inicio o el formulario; ver todos los registros de todas las fechas y buscar un ID exacto.
+- Al guardar, regresar a Movimientos. Seleccionar una fila para consultar, editar o eliminar el movimiento.
 - Confirmar la actualización y la eliminación mediante diálogos con opciones de confirmar o cancelar.
 - Crear, consultar, actualizar y eliminar desde `TransactionEditActivity`.
 - Mostrar los textos en español o inglés según el idioma del dispositivo.
@@ -39,14 +40,14 @@ Como conductor y estudiante necesito saber cuánto dinero recibo, en qué lo gas
 
 ## Mockups y pantallas
 
-Los mockups conservan el diseño inicial con datos ficticios. Las imágenes todavía muestran funciones propuestas como comprobantes y mapa. La aplicación implementa cuatro pantallas XML; la Tarea 5 amplía el formulario con búsqueda y CRUD completo.
+Los mockups conservan el diseño inicial con datos ficticios. Las imágenes todavía muestran funciones propuestas como comprobantes y mapa. La aplicación implementa cuatro pantallas XML; la Tarea 5 incorpora Movimientos con búsqueda por ID, detalle y formulario de edición.
 
 ![Vista general de los mockups](docs/mockups/overview.png)
 
 | Pantalla | Mockup | Activity y layout |
 | --- | --- | --- |
 | Resumen mensual | [Diseño](docs/mockups/01-dashboard.png) | `DashboardActivity` / `activity_dashboard.xml` |
-| Historial con filtros | [Diseño](docs/mockups/02-history.png) | `HistoryActivity` / `activity_history.xml` |
+| Movimientos con búsqueda por ID | [Diseño](docs/mockups/02-history.png) | `HistoryActivity` / `activity_history.xml` |
 | Crear o editar movimiento | [Diseño](docs/mockups/03-editor.png) | `TransactionEditActivity` / `activity_transaction_edit.xml` |
 | Detalle y acciones | [Diseño](docs/mockups/04-detail.png) | `DetailActivity` / `activity_detail.xml` |
 | Ubicación del gasto (propuesta futura) | [Diseño](docs/mockups/05-location.png) | Pendiente |
@@ -76,7 +77,7 @@ Los montos se calculan con números enteros en centésimos para conservar los de
 | --- | --- | --- |
 | 2 | Definición individual y descripción | Este README |
 | 2 | Mockups y UX | `docs/mockups/` y tabla de pantallas |
-| 2 | CRUD, filtros, cámara/galería, diálogos, mapa | CRUD, filtros y selector de fecha implementados. Cámara, galería y mapa quedan como propuesta para más adelante. |
+| 2 | CRUD, filtros, cámara/galería, diálogos, mapa | CRUD, búsqueda por ID, resumen mensual y selector de fecha implementados. Cámara, galería y mapa quedan como propuesta para más adelante. |
 | 3 | Modelos y clases generales | `domain/model/`, `util/` |
 | 3 | Interfaz de repositorio | `domain/repository/` |
 | 3 | MemoryDataRepository | `data/memory/` |
@@ -84,9 +85,9 @@ Los montos se calculan con números enteros en centésimos para conservar los de
 | 3 y 4 | Código en inglés | Identificadores y comentarios en inglés |
 | 3 y 4 | Recursos en dos idiomas | `res/values/strings.xml` y `res/values-es/strings.xml` |
 | 4 | Activities y layouts según mockups | Cuatro Activities y cuatro layouts XML |
-| 5 | Activity con CRUD completo | `TransactionEditActivity`: crear, buscar/consultar, actualizar y eliminar |
+| 5 | CRUD completo | Movimientos permite buscar y seleccionar; detalle y formulario permiten consultar, actualizar y eliminar con confirmación |
 | 5 | Diálogos al actualizar y eliminar | `confirmAction` con confirmar/cancelar; eliminación también desde detalle |
-| 5 | Búsqueda para entrar en modo edición | Descripción o ID, sin limitar al mes seleccionado en el historial |
+| 5 | Búsqueda para entrar en modo edición | ID numérico exacto en Movimientos, lista con ID y nombre, acceso al detalle y edición |
 | 5 | Código en inglés | Clases, funciones, variables, recursos e identificadores en inglés; traducciones de interfaz separadas |
 | 5 | Rama temporal y PR hacia main | `task5-MarioEspinoza-MiBalance`; aprobación del profesor antes de merge |
 
@@ -114,7 +115,7 @@ Consultar [la guía de instalación y entrega](docs/INSTALL_AND_DELIVERY.md). La
 
 ## Datos en memoria
 
-Los movimientos se comparten entre las pantallas mientras el proceso de MiBalance sigue activo. Al finalizar el proceso, la lista vuelve a estar vacía. En el formulario y el historial, tocá el botón de tipo o categoría para recorrer las opciones.
+Los movimientos se comparten entre las pantallas mientras el proceso de MiBalance sigue activo. Al finalizar el proceso, la lista vuelve a estar vacía. En el formulario, tocá el botón de tipo o categoría para recorrer las opciones. Los IDs se asignan al guardar y comparten una secuencia para ingresos y gastos. Editar conserva el ID; eliminar no renumera los demás ni reutiliza ese número. Como el almacenamiento sigue siendo en memoria, al terminar el proceso se borran los registros y el contador vuelve a empezar en 1.
 
 ## Verificación
 

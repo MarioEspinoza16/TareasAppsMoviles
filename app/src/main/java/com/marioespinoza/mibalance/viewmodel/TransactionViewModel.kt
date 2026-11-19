@@ -14,11 +14,9 @@ class TransactionViewModel : ViewModel() {
 
         fun getTransaction(id: String): Transaction? = repository.findById(id)
 
-        fun searchTransactions(query: String): List<Transaction> = repository.search(query)
+        fun getAllTransactions(): List<Transaction> = repository.getAll()
 
-        fun saveTransaction(transaction: Transaction) {
-            repository.save(transaction)
-        }
+        fun saveTransaction(transaction: Transaction): Transaction = repository.save(transaction)
 
         fun removeTransaction(id: String) {
             repository.delete(id)

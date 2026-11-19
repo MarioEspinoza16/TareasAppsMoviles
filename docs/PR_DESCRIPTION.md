@@ -1,12 +1,12 @@
 ## MiBalance — Task 5
 
-The transaction form now supports complete CRUD in one Activity. Users can search by description or ID across all months, select a transaction and edit its fields. Updates and deletions require a confirmation dialog; cancelling leaves the stored transaction unchanged. The detail screen also uses a deletion dialog.
+Users can open Transactions from the dashboard or the editor. This screen lists all recorded movements across all dates, with each sequential numeric ID beside its name. The search field above the list matches an exact ID; Show all restores the full list. Selecting a row opens its detail, where users can edit or delete it.
 
-- The Task 4 application is included as the baseline because it has not been merged into main.
-- History and recent transaction rows show the full transaction ID and a Copy ID button, so users can look up a known movement. Copying does not open the detail screen.
-- New mode clears the form and generates a new ID on save. Editing preserves the selected ID, including after Activity recreation.
-- Existing financial validation, monthly totals, filters and Spanish/English UI resources are retained. Source code identifiers are in English.
-- Transactions remain in memory for the app process lifetime. This delivery implements the CRUD, search and dialogs shown in the supplied Task 5 instructions.
-- JUnit and Robolectric tests cover amounts, summaries, repository search, CRUD, confirmation cancellation and form recreation. See `docs/VALIDATION.md` for actual execution results and `docs/MANUAL_TESTS.md` for the device checklist.
+- Income and expense records share IDs 1, 2, 3 and so on, assigned when saving. Updating keeps the ID; deletion does not renumber records or reuse an ID.
+- Saving a new or edited transaction returns to the list. Returning to an existing Transactions screen clears its previous search so the saved movement is visible.
+- The editor requires a transaction name/description. Updates and deletions use confirm/cancel dialogs; cancelling leaves stored data unchanged.
+- The monthly dashboard, amount validation, vehicle categories and Spanish/English UI remain available. Source code identifiers are in English.
+- The repository remains in memory: ending the app process clears records and restarts the counter. This delivery does not add Room.
+- Task 4 is included as the baseline because it has not been merged into main.
 
-Base: `main`. Branch/title: `task5-MarioEspinoza-MiBalance`. Professor reviewer: `ebarahonautn`. Merge only after the professor approves; submit the PR URL in campus.
+See `docs/VALIDATION.md` for automated results and `docs/MANUAL_TESTS.md` for the physical device checklist. Branch/title: `task5-MarioEspinoza-MiBalance`; base: `main`. Professor reviewer: `ebarahonautn`. Merge only after professor approval; submit the PR URL in campus.

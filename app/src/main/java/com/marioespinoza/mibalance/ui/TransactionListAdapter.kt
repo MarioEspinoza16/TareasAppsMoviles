@@ -58,8 +58,7 @@ class TransactionListAdapter(
         )
         holder.amount.setTextColor(ContextCompat.getColor(context, if (income) R.color.income else R.color.expense))
         holder.meta.text = context.getString(R.string.transaction_meta, type, date)
-        holder.description.text = transaction.description
-        holder.description.visibility = if (transaction.description.isBlank()) View.GONE else View.VISIBLE
+        holder.description.text = transaction.description.ifBlank { context.getString(transaction.category.labelRes) }
         holder.transactionId.text = context.getString(R.string.transaction_id_value, transaction.id)
         holder.copyId.setOnClickListener {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

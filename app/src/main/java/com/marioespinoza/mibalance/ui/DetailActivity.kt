@@ -33,6 +33,7 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
+        findViewById<TextView>(R.id.transactionId).text = getString(R.string.transaction_id_value, transaction.id)
         val income = transaction.type == TransactionType.INCOME
         findViewById<TextView>(R.id.category).setText(transaction.category.labelRes)
         findViewById<TextView>(R.id.amount).text = money(transaction.amountMinor)

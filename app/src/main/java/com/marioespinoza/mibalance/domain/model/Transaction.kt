@@ -2,7 +2,6 @@ package com.marioespinoza.mibalance.domain.model
 
 import java.time.LocalDate
 import java.time.YearMonth
-import java.util.UUID
 
 enum class TransactionType { INCOME, EXPENSE }
 enum class Category(val type: TransactionType, val isVehicle: Boolean = false) {
@@ -12,7 +11,7 @@ enum class Category(val type: TransactionType, val isVehicle: Boolean = false) {
 }
 
 data class Transaction(
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = "",
     val type: TransactionType,
     val amountMinor: Long,
     val date: LocalDate,

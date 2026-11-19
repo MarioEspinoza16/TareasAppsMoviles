@@ -1,12 +1,12 @@
 package com.marioespinoza.mibalance.ui
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.marioespinoza.mibalance.R
@@ -17,7 +17,6 @@ import com.marioespinoza.mibalance.util.Money
 import com.marioespinoza.mibalance.util.confirmAction
 import com.marioespinoza.mibalance.util.dateText
 import com.marioespinoza.mibalance.util.labelRes
-import com.marioespinoza.mibalance.util.money
 import com.marioespinoza.mibalance.util.setupScreen
 import com.marioespinoza.mibalance.util.toast
 import com.marioespinoza.mibalance.viewmodel.TransactionViewModel
@@ -73,7 +72,7 @@ class TransactionEditActivity : AppCompatActivity() {
             }, date.year, date.monthValue - 1, date.dayOfMonth).show()
         }
         findViewById<Button>(R.id.save).setOnClickListener { save() }
-        findViewById<Button>(R.id.search).setOnClickListener { searchTransactions() }
+        findViewById<Button>(R.id.movements).setOnClickListener { openMovements() }
         findViewById<Button>(R.id.newTransaction).setOnClickListener { clearForm() }
         findViewById<Button>(R.id.delete).setOnClickListener { deleteTransaction() }
         findViewById<Button>(R.id.cancel).setOnClickListener { finish() }
@@ -114,7 +113,7 @@ class TransactionEditActivity : AppCompatActivity() {
     }
 
     private fun clearErrors() {
-        listOf(R.id.amount, R.id.description, R.id.odometer, R.id.liters, R.id.searchQuery).forEach {
+        listOf(R.id.amount, R.id.description, R.id.odometer, R.id.liters).forEach {
             findViewById<EditText>(it).error = null
         }
     }
@@ -124,7 +123,7 @@ class TransactionEditActivity : AppCompatActivity() {
         type = TransactionType.EXPENSE
         category = Category.FUEL
         date = LocalDate.now()
-        listOf(R.id.amount, R.id.description, R.id.odometer, R.id.liters, R.id.searchQuery).forEach {
+        listOf(R.id.amount, R.id.description, R.id.odometer, R.id.liters).forEach {
             findViewById<EditText>(it).setText("")
         }
         clearErrors()
@@ -133,36 +132,18 @@ class TransactionEditActivity : AppCompatActivity() {
         showDate()
     }
 
-    private fun searchTransactions() {
-        val queryField = findViewById<EditText>(R.id.searchQuery)
-        val query = queryField.text.toString().trim()
-        if (query.isBlank()) {
-            queryField.error = getString(R.string.error_search)
-            return
-        }
-        queryField.error = null
-        val matches = TransactionViewModel.searchTransactions(query)
-        if (matches.isEmpty()) {
-            toast(R.string.error_not_found)
-            return
-        }
-        val labels = matches.map {
-            getString(R.string.search_result, dateText(it.date), money(it.amountMinor),
-                getString(it.category.labelRes), it.description.ifBlank { getString(R.string.no_description) }, it.id)
-        }.toTypedArray()
-        AlertDialog.Builder(this)
-            .setTitle(R.string.select_transaction)
-            .setItems(labels) { _, position -> fillFields(matches[position]) }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
+    private fun openMovements() {
+        startActivity(Intent(this, HistoryActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))
+        finish()
     }
 
     private fun deleteTransaction() {
         val transaction = existing ?: return
         confirmAction(R.string.confirm_delete, R.string.delete_question, R.string.delete) {
             TransactionViewModel.removeTransaction(transaction.id)
-            clearForm()
             toast(R.string.deleted)
+            openMovements()
         }
     }
 
@@ -192,8 +173,9 @@ class TransactionEditActivity : AppCompatActivity() {
         }
         val descriptionField = findViewById<EditText>(R.id.description)
         val description = descriptionField.text.toString().trim()
-        if ((category == Category.MAINTENANCE || category == Category.REPAIRS) && description.isBlank()) {
-            descriptionField.error = getString(R.string.error_description)
+        if (description.isBlank()) {
+            descriptionField.error = getString(if (category == Category.MAINTENANCE || category == Category.REPAIRS)
+                R.string.error_description else R.string.error_name)
             return
         }
 
@@ -230,9 +212,10 @@ class TransactionEditActivity : AppCompatActivity() {
     }
 
     private fun persistTransaction(transaction: Transaction) {
+        if (isFinishing) return
         TransactionViewModel.saveTransaction(transaction)
-        fillFields(transaction)
         toast(R.string.saved)
+        openMovements()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

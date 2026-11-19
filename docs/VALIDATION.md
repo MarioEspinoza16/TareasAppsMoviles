@@ -1,6 +1,6 @@
 # Validación de MiBalance — Tarea 5
 
-Comando desde la raíz del proyecto en PowerShell:
+Desde PowerShell en la raíz del proyecto:
 
 ```powershell
 .\gradlew.bat testDebugUnitTest lintDebug assembleDebug
@@ -8,17 +8,20 @@ Comando desde la raíz del proyecto en PowerShell:
 
 En Linux se usa `./gradlew` con las mismas tareas. La configuración local del SDK y la red no forma parte del repositorio.
 
-## Cobertura
-
-- JUnit: montos decimales, validaciones, totales, categorías, filtros, actualización sin duplicados, eliminación y búsqueda por descripción/ID entre meses.
-- Robolectric (Android API 28): CRUD del formulario, selección de resultados, confirmación/cancelación de actualización y eliminación, eliminación desde detalle recreación de la Activity después de cambiar a modo Nuevo y visualización/copia del ID correcto al reutilizar filas del listado.
-- Android Lint y compilación del APK de depuración.
-
 ## Resultados — 19 de noviembre de 2026
 
-- `testDebugUnitTest`: 16 pruebas aprobadas (10 de JUnit y 6 de Robolectric), sin fallos.
-- `lintDebug`: completado sin errores. Las advertencias del informe no bloquean la compilación.
-- `assembleDebug`: compilación correcta; APK generado en `app/build/outputs/apk/debug/app-debug.apk`.
+- `testDebugUnitTest`: 19 pruebas aprobadas (11 de JUnit y 8 de Robolectric), sin fallos.
+- `lintDebug`: completado sin errores; el informe conserva advertencias no bloqueantes.
+- `assembleDebug`: APK generado en `app/build/outputs/apk/debug/app-debug.apk`.
 - `git diff --check`: sin errores de formato.
 
-El recorrido en un teléfono físico sigue pendiente y se detalla en [MANUAL_TESTS.md](MANUAL_TESTS.md).
+## Cobertura
+
+- Montos, validaciones, categorías, totales y selección mensual del resumen.
+- IDs consecutivos compartidos entre ingresos y gastos; actualización que conserva el ID; eliminación sin reutilizar IDs ni renumerar registros.
+- Lista con 50 movimientos de distintas fechas y búsqueda exacta por ID.
+- Acceso a Movimientos desde inicio y formulario; retorno a la lista al guardar; selección de una fila y apertura del detalle correcto.
+- Confirmar/cancelar actualización y eliminación; recreación de la Activity en modo Nuevo; copia del ID de la fila correcta.
+- Restablecimiento de la lista al volver después de guardar o eliminar un movimiento buscado.
+
+El flujo actualizado todavía debe revisarse en el HONOR. Ver [MANUAL_TESTS.md](MANUAL_TESTS.md). El repositorio sigue en memoria: finalizar el proceso borra los movimientos y reinicia la secuencia.

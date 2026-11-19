@@ -42,7 +42,7 @@ class DashboardActivity : AppCompatActivity(), OnTransactionClickListener {
         findViewById<Button>(R.id.addIncome).setOnClickListener { openForm(TransactionType.INCOME) }
         findViewById<Button>(R.id.addExpense).setOnClickListener { openForm(TransactionType.EXPENSE) }
         findViewById<Button>(R.id.history).setOnClickListener {
-            startActivity(Intent(this, HistoryActivity::class.java).putExtra("month", month.toString()))
+            startActivity(Intent(this, HistoryActivity::class.java))
         }
     }
 
